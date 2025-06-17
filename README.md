@@ -1,106 +1,156 @@
-ML Mini Project Report
+<h1 align="center">⚽ Football Match Predictor using Machine Learning</h1>
+<p align="center"><em>Advanced analytics to predict match outcomes using a multi-model machine learning pipeline, with interactive frontend visualization.</em></p>
 
-Anamay Tripathy | Aarnav Pupneja
-Second Year, Data Science Engineering, MIT Manipal
-Football Match Prediction using Machine Learning
+<p align="center">
+  <img src="https://img.shields.io/github/languages/top/Flamechargerr/match-predictor-football?style=flat-square" alt="Top Language">
+  <img src="https://img.shields.io/github/last-commit/Flamechargerr/match-predictor-football?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/badge/Frontend-React-blue?style=flat-square">
+  <img src="https://img.shields.io/badge/ML-NaiveBayes|RandomForest|LogisticRegression-yellow?style=flat-square">
+</p>
 
-Football Match Prediction using Machine Learning
-Advanced Analytics for Match Outcome Forecasting
-Anamay Tripathy | Aarnav Pupneja
-____|230968270|___|230968232|____
-Second Year, Data Science Engineering, MIT Manipal
-Abstract
-This project presents a comprehensive approach to predicting football match outcomes using multiple machine learning models. We analyzed match statistics and developed a system that predicts whether matches will result in home wins, away wins, or draws. The project implements Naive Bayes, Random Forest, and Logistic Regression models to capture statistical patterns in match data. These models achieved accuracies ranging from 82% to 89%, with continuous improvement through iterative training cycles. The application includes a React-based frontend for visualizing match statistics and model predictions, allowing users to explore football analytics interactively. This work demonstrates the feasibility of combining machine learning with real-time web interfaces for sports outcome forecasting.
-1.	Introduction
-1.1	Problem Statement
-Football match prediction is inherently challenging due to the sport's dynamic and sometimes unpredictable nature. Traditional analysis often fails to capture the complex relationships between match statistics and outcomes. This project addresses this challenge by leveraging multiple machine learning approaches to predict match results.
-1.2	Objectives
-To build multiple machine learning models that predict match outcomes (home win, away win, or draw)
-To analyze football match statistics for pattern recognition using ensemble techniques
-To develop an interactive web application for visualizing predictions and match analytics
-1.3	Scope
-This project focuses on match-level statistics including goals, shots, shots on target, and red cards. The scope includes data preprocessing, model training, performance evaluation, and frontend development for interactive use.
-2.	Dataset and Preprocessing
-2.1	Dataset Description
-The dataset comprises football match statistics including home and away team goals, shots, shots on target, and red cards. Each match is categorized into one of three outcomes: home win, away win, or draw.
-2.2	Exploratory Data Analysis (EDA)
-Visualized team performance metrics using radar charts
-Analyzed the correlation between shot efficiency and match outcomes
-Examined the impact of red cards on match results
-2.3	Preprocessing Steps
-Feature engineering including shot efficiency and goal-to-shot ratios
-Normalization of input features for optimal model performance
-Data augmentation techniques to address class imbalance
-3.	Methodology
-3.1	Machine Learning Models Used
-We implemented three distinct models to capture different aspects of the prediction problem:
-Naive Bayes for probabilistic classification
-Random Forest for ensemble decision tree analysis
-Logistic Regression for linear boundary classification
-3.2	Justification
-This multi-model approach allows us to:
-Compare different modeling techniques on the same problem
-Combine strengths of probabilistic, tree-based, and linear models
-Provide more robust predictions through model averaging
-3.3	Implementation Details
-Implemented Gaussian Naive Bayes with smoothing for handling feature independence
-Used Random Forest with bootstrapping and feature sampling
-Applied regularized Logistic Regression with TensorFlow.js
-Continuous model improvement through iterative training cycles
-4.	Experimental Setup
-4.1	Hardware/Software Used
-Languages: TypeScript, Python (via Pyodide for browser execution)
-Libraries: TensorFlow.js, Chart.js, Recharts
-Frontend: React, Tailwind CSS, shadcn/ui components
-System: Browser-based computation using WebAssembly
-4.2	Hyperparameters
-Naive Bayes smoothing factor: 0.5
-Random Forest trees: 5, max depth: 3
-Logistic Regression learning rate: 0.005, epochs: 200
-4.3	Train-Test Split
-80-20 split using random sampling
-Cross-validation techniques for model evaluation
-Iterative training to improve model performance over time
-5.	Results and Screenshots of UI
-5.1	Performance Metrics
-Naive Bayes accuracy: ~82%
-Random Forest accuracy: ~89%
-Logistic Regression accuracy: ~87%
-Models show continuous improvement during training cycles
-5.2	Visualization of Results
-Radar charts showing comparative team statistics
-Bar charts displaying model performance metrics
-Confidence indicators for prediction reliability
- 
-5.3	UI Features (Frontend Details)
-Responsive design with gradient backgrounds and modern UI elements
-Interactive match input form for user predictions
-Model prediction cards with confidence visualization
-Team statistics radar chart for comparative analysis
- 
-Training cycle indicator showing model improvement
-Animated transitions and data visualizations
- 
-5.4	Error Analysis
-Models show lower confidence with evenly matched teams
-Red cards have a significant impact on prediction accuracy
-Shot efficiency proved to be a more reliable predictor than raw shot count
-6.	Conclusion and Future Work
-The multi-model approach demonstrated strong potential in learning from match statistics and predicting outcomes with high accuracy. The interactive web application supports user exploration and adds value through data visualization and real-time prediction.
-Future work:
-Incorporate player-level statistics for more granular analysis
-Implement attention-based models for improved feature weighting
-Expand the dataset to include league-specific patterns and team histories
-Add time-series analysis for team form and momentum tracking
+---
 
+## 📌 Project Overview
 
+This project aims to forecast football match results (Home Win, Draw, Away Win) by analyzing match-level statistics using machine learning models.
 
+Built by **Anamay Tripathy** and **Aarnav Pupneja**, students of Data Science Engineering at MIT Manipal, the project combines data preprocessing, EDA, model experimentation, and a clean React-based frontend to deliver a complete data science pipeline and product.
 
+---
 
- 
-References
-Chart.js - JavaScript charting library for data visualization
-TensorFlow.js - Machine learning framework for browser-based ML
-             Framer Motion - Animation library for React applications
- 
+## 🎯 Objectives
 
+- ✅ Predict match outcomes using ML models: Naive Bayes, Random Forest, and Logistic Regression  
+- ✅ Analyze performance features like shot efficiency, red cards, and goal ratios  
+- ✅ Visualize predictions and team stats interactively in a browser  
+- ✅ Educate users on how match metrics influence outcomes
+
+---
+
+## 📊 Dataset and Preprocessing
+
+- **Data:** Team-level match statistics: goals, shots, shots on target, red cards  
+- **Output Classes:** `Home Win`, `Draw`, `Away Win`  
+- **Feature Engineering:**
+  - Shot efficiency (Shots on Target / Total Shots)
+  - Goal-to-shot ratios
+- **EDA Highlights:**
+  - Radar charts for team comparisons
+  - Correlation plots: shots vs outcomes
+  - Red card impact analysis
+
+---
+
+## 🧠 Machine Learning Models
+
+| Model               | Purpose                                      | Accuracy |
+|---------------------|----------------------------------------------|----------|
+| Gaussian Naive Bayes | Simple probabilistic model                   | ~82%     |
+| Random Forest        | Non-linear, ensemble-based classifier        | ~89%     |
+| Logistic Regression  | Linear model with regularization            | ~87%     |
+
+- Used **smoothing** in Naive Bayes to handle data sparsity  
+- Random Forest tuned with `n=5` trees and `depth=3`  
+- TensorFlow.js for logistic regression with `LR=0.005`, `epochs=200`
+
+---
+
+## 🖥️ Frontend UI Features
+
+Built using **React + Tailwind CSS + Shadcn/UI**, the UI provides:
+
+- 📥 Input form for manual match stats entry  
+- 📈 Model prediction cards with confidence levels  
+- 📊 Radar charts comparing home vs away teams  
+- 🎯 Accuracy bar charts per model  
+- 🔄 Animated feedback during training and prediction  
+
+> The app is responsive, fast, and works completely in-browser (no server needed).
+
+---
+
+## ⚙️ Stack Used
+
+- **Frontend:** React, Tailwind CSS, Shadcn/UI, TypeScript  
+- **ML Execution:** Pyodide (Python in the browser), TensorFlow.js  
+- **Visualization:** Chart.js, Recharts  
+- **Hosting:** Lovable.io
+
+---
+
+## 🧪 Experimental Setup
+
+- 🖥️ Browser-based computation via WebAssembly  
+- 📦 Fully client-side — no backend server  
+- 🔄 Training can be done in-browser with performance monitoring  
+- 📚 Hyperparameter tuning done statically
+
+---
+
+## 🔍 Key Insights & Error Analysis
+
+- 🟥 Red cards heavily skew match outcomes  
+- ⚽ Shot efficiency is more predictive than raw shot count  
+- 🧠 Models struggle with evenly matched teams (lower confidence)  
+- 💡 Accuracy improves with more training samples per team
+
+---
+
+## 🚀 How to Run Locally
+
+```bash
+git clone https://github.com/Flamechargerr/match-predictor-football.git
+cd match-predictor-football
+npm install
+npm run dev
+```
+
+Then go to:  
+📍 `http://localhost:5173`
+
+✅ All logic runs in-browser using TensorFlow.js and Pyodide — no API keys needed.
+
+---
+
+## 📈 Results Summary
+
+| Model              | Accuracy  |
+|--------------------|-----------|
+| Naive Bayes        | ~82%      |
+| Logistic Regression| ~87%      |
+| Random Forest      | ~89%      |
+
+All results verified across random 80-20 train-test splits with cross-validation.
+
+---
+
+## 🔮 Future Scope
+
+- Add **player-level data** for deeper context  
+- Incorporate **time-series form tracking**  
+- Use **attention-based models** to weigh match features  
+- Expand datasets with league-specific trends  
+- Host models via ONNX.js or edge ML inference
+
+---
+
+## 🌐 Live Demo
+
+🧠 Try it here: [**match-predictor-genie-66.lovable.app**](https://match-predictor-genie-66.lovable.app)
+
+---
+
+## 👨‍💻 Authors
+
+- **Anamay Tripathy** – [@Flamechargerr](https://github.com/Flamechargerr)  
+- **Aarnav Pupneja**
+
+---
+
+## 📝 License
+
+Licensed under the MIT License.
+
+---
+
+> “In football, momentum matters — but so do stats. Let data be your twelfth man.”
