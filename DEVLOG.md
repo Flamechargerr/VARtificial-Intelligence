@@ -9,3 +9,4 @@
 - [2025-09-06 23:59] feat(viz): add prediction probability gauge
 - [2025-09-07 20:52] feat(features): head-to-head record extraction
 - [2025-09-07 21:37] refactor(pipeline): modularize training pipeline
+- [2025-09-09 04:11] feat(api): serve predictions via REST endpoint
