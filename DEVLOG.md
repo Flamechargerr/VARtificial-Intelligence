@@ -17,3 +17,4 @@
 - [2025-09-09 22:23] feat(viz): confusion matrix visualization
 - [2025-09-09 22:29] docs(model): document feature importance
 - [2025-09-10 00:07] feat(features): weather impact correlation
+- [2025-09-09 20:44] fix(data): normalize team name variations
