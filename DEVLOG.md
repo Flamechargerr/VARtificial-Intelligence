@@ -14,3 +14,4 @@
 - [2025-09-09 19:26] feat(features): venue advantage coefficient
 - [2025-09-10 02:00] feat(data): integrate live odds API
 - [2025-09-09 19:39] test(model): k-fold cross validation setup
+- [2025-09-09 22:23] feat(viz): confusion matrix visualization
