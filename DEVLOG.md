@@ -20,3 +20,4 @@
 - [2025-09-09 20:44] fix(data): normalize team name variations
 - [2025-09-09 23:59] feat(ui): add match day prediction dashboard
 - [2025-09-09 23:41] perf(inference): batch prediction optimization
+- [2025-09-10 02:15] style(ui): add football pitch SVG overlay
