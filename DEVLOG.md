@@ -32,3 +32,4 @@
 - [2025-09-12 21:24] feat(api): serve predictions via REST endpoint
 - [2025-09-13 00:15] perf(model): hyperparameter tuning with Optuna
 - [2025-09-12 22:54] feat(features): venue advantage coefficient
+- [2025-09-13 02:20] feat(data): integrate live odds API
