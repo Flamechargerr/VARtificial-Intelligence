@@ -465,3 +465,4 @@
 - [2025-09-14 23:00] style: apply consistent code formatting
 - [2025-09-15 00:03] perf: optimize database query plan
 - [2025-09-15 02:45] fix: correct async state race condition
+- [2025-09-15 00:50] perf: lazy load heavy components
