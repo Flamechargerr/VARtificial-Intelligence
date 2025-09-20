@@ -780,3 +780,4 @@
 - [2025-12-31 23:29] fix: handle null reference gracefully
 - [2025-12-31 20:50] style: responsive layout adjustments
 - [2025-09-20 22:39] test: add integration test coverage
+- [2025-09-21 02:44] refactor: simplify conditional logic
