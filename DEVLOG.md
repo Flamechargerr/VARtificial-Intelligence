@@ -941,3 +941,4 @@
 - [2026-01-09 03:30] refactor: optimize render pipeline
 - [2026-01-09 00:54] docs: update API documentation
 - [2026-01-09 02:39] fix: prevent memory leak in effect cleanup
+- [2025-09-23 21:26] fix: correct async state race condition
