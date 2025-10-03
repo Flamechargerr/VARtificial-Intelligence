@@ -55,3 +55,4 @@
 - [2025-09-30 01:39] feat(data): integrate live odds API
 - [2025-10-01 00:24] test(model): k-fold cross validation setup
 - [2025-10-03 20:28] feat(viz): confusion matrix visualization
+- [2025-10-03 21:50] docs(model): document feature importance
