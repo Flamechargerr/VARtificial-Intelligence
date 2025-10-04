@@ -56,3 +56,4 @@
 - [2025-10-01 00:24] test(model): k-fold cross validation setup
 - [2025-10-03 20:28] feat(viz): confusion matrix visualization
 - [2025-10-03 21:50] docs(model): document feature importance
+- [2025-10-04 21:11] feat(features): weather impact correlation
