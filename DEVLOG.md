@@ -107,3 +107,4 @@
 - [2025-10-22 00:43] feat(features): calculate rolling form average
 - [2025-10-22 22:05] fix(model): handle missing player injury data
 - [2025-10-24 01:37] feat(viz): add prediction probability gauge
+- [2025-10-28 00:15] feat(features): head-to-head record extraction
