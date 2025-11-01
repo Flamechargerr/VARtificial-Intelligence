@@ -58,7 +58,7 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
       <motion.div 
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="flex items-center bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-full px-3 py-1.5 cursor-pointer shadow-lg"
+        className="flex items-center bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-full px-3 py-1.5 cursor-pointer shadow-lg transition-all duration-300"
       >
         <RefreshCw className="w-4 h-4 mr-2 animate-spin-slow" />
         <span className="text-xs font-medium">
@@ -73,7 +73,7 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
                   ? "#4ade80" 
                   : "#ffffff4d"
               }}
-              className={`w-1.5 h-1.5 rounded-full`}
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-300`}
             />
           ))}
         </div>
@@ -106,7 +106,7 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
         </div>
         
         {/* Terminal-like console showing training logs */}
-        <Card className="mt-3 bg-black border-gray-800">
+        <Card className="mt-3 bg-black border-gray-800 transition-all duration-300 hover:scale-[1.02]">
           <CardContent className="p-3">
             <div className="flex items-center mb-2">
               <Terminal className="w-4 h-4 text-green-500 mr-2" />
