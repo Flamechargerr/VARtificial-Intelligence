@@ -1,6 +1,5 @@
-
 import React from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell, LabelList } from "recharts";
 
 type ModelData = {
   name: string;
@@ -27,6 +26,23 @@ const ModelPerformanceChart: React.FC<ModelPerformanceChartProps> = ({ models, c
   const accuracyColors = ["rgba(99, 102, 241, 0.8)", "rgba(79, 70, 229, 0.8)"];
   const precisionColors = ["rgba(16, 185, 129, 0.8)", "rgba(5, 150, 105, 0.8)"];
   const f1ScoreColors = ["rgba(236, 72, 153, 0.8)", "rgba(219, 39, 119, 0.8)"];
+
+  // Custom tooltip component
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+          <p className="font-bold text-gray-900 dark:text-white">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.dataKey}: {entry.value.toFixed(1)}%
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className={`w-full h-full ${className}`}>
@@ -71,21 +87,7 @@ const ModelPerformanceChart: React.FC<ModelPerformanceChartProps> = ({ models, c
             tickFormatter={(value) => `${value}%`}
             domain={[0, 100]}
           />
-          <Tooltip
-            contentStyle={{ 
-              backgroundColor: "rgba(255, 255, 255, 0.95)",
-              border: "1px solid rgba(229, 231, 235, 1)",
-              borderRadius: "0.5rem",
-              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-              fontSize: "12px",
-              fontFamily: "'Inter', sans-serif",
-              padding: "8px 12px",
-              color: "#374151",
-            }}
-            formatter={(value: number) => [`${value.toFixed(1)}%`, undefined]}
-            labelStyle={{ fontWeight: 600, color: "#111827", marginBottom: "4px" }}
-            cursor={{ fill: 'rgba(0,0,0,0.05)' }}
-          />
+          <Tooltip content={<CustomTooltip />} />
           <Legend 
             wrapperStyle={{ paddingTop: "12px", fontSize: "12px", fontFamily: "'Inter', sans-serif" }}
             iconType="circle"
@@ -97,7 +99,9 @@ const ModelPerformanceChart: React.FC<ModelPerformanceChartProps> = ({ models, c
             radius={[4, 4, 0, 0]} 
             animationDuration={1500}
             name="Accuracy"
-          />
+          >
+            <LabelList dataKey="Accuracy" position="top" formatter={(value: number) => `${value.toFixed(1)}%`} />
+          </Bar>
           <Bar 
             dataKey="Precision" 
             fill="url(#precisionGradient)" 
@@ -105,7 +109,9 @@ const ModelPerformanceChart: React.FC<ModelPerformanceChartProps> = ({ models, c
             animationDuration={1500}
             animationBegin={300}
             name="Precision"
-          />
+          >
+            <LabelList dataKey="Precision" position="top" formatter={(value: number) => `${value.toFixed(1)}%`} />
+          </Bar>
           {chartData[0].F1Score !== undefined && (
             <Bar 
               dataKey="F1Score" 
@@ -114,7 +120,9 @@ const ModelPerformanceChart: React.FC<ModelPerformanceChartProps> = ({ models, c
               animationDuration={1500}
               animationBegin={600}
               name="F1 Score"
-            />
+            >
+              <LabelList dataKey="F1Score" position="top" formatter={(value: number) => `${value.toFixed(1)}%`} />
+            </Bar>
           )}
         </BarChart>
       </ResponsiveContainer>
