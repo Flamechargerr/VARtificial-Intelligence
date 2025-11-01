@@ -1,9 +1,10 @@
-
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface TeamStatInputProps {
   teamType: "home" | "away";
@@ -57,6 +58,9 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
         <h3 className={`text-lg font-semibold ${textColor}`}>
           {isHome ? "Home Team" : "Away Team"}
         </h3>
+        <Badge variant={isHome ? "default" : "destructive"} className="ml-auto">
+          {isHome ? "HOME" : "AWAY"}
+        </Badge>
       </div>
 
       <div className="space-y-4">
@@ -85,57 +89,77 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
             <Label htmlFor={`${teamType}-goals`} className={`mb-1.5 block font-medium ${labelColor}`}>
               Goals *
             </Label>
-            <Input
-              id={`${teamType}-goals`}
-              type="number"
-              min="0"
-              value={goals}
-              onChange={(e) => onGoalsChange(e.target.value)}
-              className="focused-input bg-white/80 backdrop-blur-sm"
-              placeholder="0"
-            />
+            <div className="relative">
+              <Input
+                id={`${teamType}-goals`}
+                type="number"
+                min="0"
+                value={goals}
+                onChange={(e) => onGoalsChange(e.target.value)}
+                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                placeholder="0"
+              />
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                ⚽
+              </div>
+            </div>
           </div>
           <div>
             <Label htmlFor={`${teamType}-shots`} className={`mb-1.5 block font-medium ${labelColor}`}>
               Shots *
             </Label>
-            <Input
-              id={`${teamType}-shots`}
-              type="number"
-              min="0"
-              value={shots}
-              onChange={(e) => onShotsChange(e.target.value)}
-              className="focused-input bg-white/80 backdrop-blur-sm"
-              placeholder="0"
-            />
+            <div className="relative">
+              <Input
+                id={`${teamType}-shots`}
+                type="number"
+                min="0"
+                value={shots}
+                onChange={(e) => onShotsChange(e.target.value)}
+                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                placeholder="0"
+              />
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                🎯
+              </div>
+            </div>
           </div>
           <div>
             <Label htmlFor={`${teamType}-on-target`} className={`mb-1.5 block font-medium ${labelColor}`}>
               On Target *
             </Label>
-            <Input
-              id={`${teamType}-on-target`}
-              type="number"
-              min="0"
-              value={shotsOnTarget}
-              onChange={(e) => onShotsOnTargetChange(e.target.value)}
-              className="focused-input bg-white/80 backdrop-blur-sm"
-              placeholder="0"
-            />
+            <div className="relative">
+              <Input
+                id={`${teamType}-on-target`}
+                type="number"
+                min="0"
+                value={shotsOnTarget}
+                onChange={(e) => onShotsOnTargetChange(e.target.value)}
+                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                placeholder="0"
+              />
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                ✅
+              </div>
+            </div>
           </div>
           <div>
             <Label htmlFor={`${teamType}-red-cards`} className={`mb-1.5 block font-medium ${labelColor}`}>
               Red Cards *
             </Label>
-            <Input
-              id={`${teamType}-red-cards`}
-              type="number"
-              min="0"
-              value={redCards}
-              onChange={(e) => onRedCardsChange(e.target.value)}
-              className="focused-input bg-white/80 backdrop-blur-sm"
-              placeholder="0"
-            />
+            <div className="relative">
+              <Input
+                id={`${teamType}-red-cards`}
+                type="number"
+                min="0"
+                value={redCards}
+                onChange={(e) => onRedCardsChange(e.target.value)}
+                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                placeholder="0"
+              />
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                🟥
+              </div>
+            </div>
           </div>
         </div>
       </div>
