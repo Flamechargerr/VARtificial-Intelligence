@@ -1,8 +1,8 @@
-
 import React, { useState } from "react";
 import FootballIcon from "@/components/FootballIcon";
 import TrainingCycleIndicator from "@/components/TrainingCycleIndicator";
 import TrainingExplanation from "@/components/TrainingExplanation";
+import { Button } from "@/components/ui/button";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -22,21 +22,34 @@ const MainLayout: React.FC<MainLayoutProps> = ({
   const [showTrainingInfo, setShowTrainingInfo] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
-      <header className="bg-gradient-to-r from-blue-600 to-indigo-700 shadow-md py-4">
-        <div className="container max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 bg-white/20 rounded-full">
-                <FootballIcon className="w-10 h-10 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-indigo-900 dark:to-purple-900">
+      {/* Animated background elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-green-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <header className="bg-gradient-to-r from-blue-600 to-green-600 shadow-xl py-6 relative overflow-hidden">
+        {/* Header background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-gray-200 bg-opacity-20"></div>
+        </div>
+        
+        <div className="container max-w-7xl mx-auto px-4 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm border border-white/30">
+                <FootballIcon className="w-12 h-12 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">Football Match Predictor</h1>
-                <p className="text-sm text-blue-100">
-                  Enter match statistics to predict the final result with ML
+                <h1 className="text-3xl font-bold text-white">VARtificial Intelligence</h1>
+                <p className="text-sm text-blue-100 font-medium">
+                  Advanced Football Match Prediction using Machine Learning
                 </p>
               </div>
             </div>
+            
             <div className="flex items-center gap-3">
               {trainingIteration > 0 && (
                 <TrainingCycleIndicator 
@@ -49,7 +62,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
                 <Button 
                   variant="outline" 
                   onClick={onToggleView}
-                  className="bg-white/10 text-white border-white/30 hover:bg-white/20"
+                  className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm transition-all duration-300"
                 >
                   {showAdvancedView ? "Simple View" : "Advanced View"}
                 </Button>
@@ -59,7 +72,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         </div>
       </header>
 
-      <main className="container max-w-7xl mx-auto px-4 py-8">
+      <main className="container max-w-7xl mx-auto px-4 py-8 relative z-10">
         {showTrainingInfo && trainingIteration > 0 && (
           <div className="mb-8 animate-fade-down">
             <TrainingExplanation 
@@ -75,25 +88,35 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         {children}
       </main>
 
-      <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white border-t border-gray-700 py-6 mt-12">
+      <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white border-t border-gray-700 py-8 mt-16">
         <div className="container max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center">
-              <FootballIcon className="w-6 h-6 text-blue-400 mr-2" />
-              <p className="text-gray-300 text-sm">
-                Football Match Predictor — Powered by Machine Learning
-              </p>
+              <FootballIcon className="w-8 h-8 text-yellow-400 mr-3" />
+              <div>
+                <p className="text-gray-300 font-semibold">
+                  VARtificial Intelligence — Powered by Machine Learning
+                </p>
+                <p className="text-gray-400 text-sm mt-1">
+                  Predicting football matches with advanced analytics
+                </p>
+              </div>
             </div>
-            <p className="text-gray-400 text-sm mt-2 md:mt-0">
-              © {new Date().getFullYear()} Football Match Predictor Genie
-            </p>
+            
+            <div className="flex flex-col items-center md:items-end">
+              <p className="text-gray-400 text-sm">
+                © {new Date().getFullYear()} VARtificial Intelligence
+              </p>
+              <div className="flex space-x-4 mt-2">
+                <span className="text-xs text-gray-500">ML Models Training</span>
+                <span className="text-xs text-green-400">● Live</span>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
     </div>
   );
 };
-
-import { Button } from "@/components/ui/button";
 
 export default MainLayout;
