@@ -1,34 +1,29 @@
-
-export type Team = {
+export interface Team {
+  id?: string;
   name: string;
   goals: string;
   shots: string;
   shotsOnTarget: string;
   redCards: string;
-};
+}
 
-export type MatchPrediction = {
-  outcome: "Home Win" | "Away Win" | "Draw";
-  confidence: number;
-  modelName: string;
-  modelAccuracy: number;
-  probabilities?: number[]; // Add this property to support probability distributions
-};
-
-export type ModelPerformance = {
-  name: string;
-  accuracy: number;
-  precision: number;
-};
-
-export type Player = {
+export interface Player {
   id: string;
   name: string;
   position: string;
-  rating: number;
-  image?: string;
-};
+  rating?: number;
+}
 
-export type TeamWithPlayers = Team & {
-  players: Player[];
-};
+export interface MatchPrediction {
+  modelName: string;
+  outcome: string;
+  confidence: number;
+  modelAccuracy: number;
+}
+
+export interface ModelPerformance {
+  name: string;
+  accuracy: number;
+  precision: number;
+  f1Score: number;
+}
