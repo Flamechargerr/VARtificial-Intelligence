@@ -30,7 +30,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      <header className="bg-gradient-to-r from-blue-600 to-green-600 shadow-xl py-6 relative overflow-hidden">
+      <header className="bg-gradient-to-r from-football-blue to-football-green shadow-xl py-6 relative overflow-hidden">
         {/* Header background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gray-200 bg-opacity-20"></div>
@@ -39,7 +39,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <div className="container max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-4">
-              <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm border border-white/30">
+              <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm border border-white/30 transition-all duration-300 hover:scale-110">
                 <FootballIcon className="w-12 h-12 text-white" />
               </div>
               <div>
@@ -62,7 +62,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
                 <Button 
                   variant="outline" 
                   onClick={onToggleView}
-                  className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm transition-all duration-300"
+                  className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-105"
                 >
                   {showAdvancedView ? "Simple View" : "Advanced View"}
                 </Button>
