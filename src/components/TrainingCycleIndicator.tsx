@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Brain, RefreshCw, ChartLine, Lightbulb, Terminal } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 interface TrainingCycleIndicatorProps {
   iteration: number;
@@ -53,28 +55,38 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
       className="relative group"
       onClick={onClick}
     >
-      <div className="flex items-center bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-full px-3 py-1.5 cursor-pointer">
+      <motion.div 
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="flex items-center bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-full px-3 py-1.5 cursor-pointer shadow-lg"
+      >
         <RefreshCw className="w-4 h-4 mr-2 animate-spin-slow" />
         <span className="text-xs font-medium">
           Training cycle: {iteration}
         </span>
         <div className="flex ml-2 space-x-1">
           {[...Array(3)].map((_, i) => (
-            <div 
+            <motion.div 
               key={i} 
-              className={`w-1.5 h-1.5 rounded-full ${
-                progress > (i + 1) * 33 
-                  ? "bg-green-400" 
-                  : "bg-white/30"
-              }`}
+              animate={{ 
+                backgroundColor: progress > (i + 1) * 33 
+                  ? "#4ade80" 
+                  : "#ffffff4d"
+              }}
+              className={`w-1.5 h-1.5 rounded-full`}
             />
           ))}
         </div>
-      </div>
+      </motion.div>
       
-      <div className="absolute z-50 -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                    w-96 bg-gray-900 text-gray-200 rounded-lg shadow-lg p-4 pointer-events-none">
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        className="absolute z-50 -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full 
+                  opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                  w-96 bg-gray-900 text-gray-200 rounded-lg shadow-xl p-4 pointer-events-none"
+      >
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2
                        w-3 h-3 bg-gray-900 rotate-45"></div>
         <div className="flex items-center mb-2">
@@ -94,22 +106,25 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
         </div>
         
         {/* Terminal-like console showing training logs */}
-        <div className="mt-3 bg-black rounded-md p-2 font-mono text-xs overflow-hidden">
-          <div className="flex items-center mb-2">
-            <Terminal className="w-4 h-4 text-green-500 mr-2" />
-            <span className="text-green-500">Training logs</span>
-          </div>
-          <div className="h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
-            {trainingLogs.map((log, index) => (
-              <div key={index} className="text-[10px] leading-tight">
-                <span className="text-pink-500">Training size: </span>
-                <span className="text-yellow-400">{log.size}</span>
-                <span className="text-pink-500">, Accuracy: </span>
-                <span className="text-yellow-400">{log.accuracy.toFixed(2)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Card className="mt-3 bg-black border-gray-800">
+          <CardContent className="p-3">
+            <div className="flex items-center mb-2">
+              <Terminal className="w-4 h-4 text-green-500 mr-2" />
+              <span className="text-green-500 text-sm font-medium">Training logs</span>
+            </div>
+            <div className="h-40 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900">
+              {trainingLogs.map((log, index) => (
+                <div key={index} className="text-[10px] leading-tight mb-1">
+                  <span className="text-pink-500">Iteration {log.iteration}: </span>
+                  <span className="text-blue-400">Size: </span>
+                  <span className="text-yellow-400">{log.size} </span>
+                  <span className="text-blue-400">Accuracy: </span>
+                  <span className="text-green-400">{(log.accuracy * 100).toFixed(1)}%</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
         
         <div className="flex items-start space-x-2 mt-3">
           <ChartLine className="w-4 h-4 text-green-500 mt-0.5" />
@@ -120,7 +135,7 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
