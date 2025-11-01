@@ -61,17 +61,17 @@ const ModelComparisonChart: React.FC<ModelComparisonChartProps> = ({ data, class
                 labelStyle={{ fontWeight: 600, color: "#111827" }}
               />
               <Legend />
-              <Bar dataKey="accuracy" name="Accuracy">
+              <Bar dataKey="accuracy" name="Accuracy" radius={[4, 4, 0, 0]}>
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length].accuracy} />
                 ))}
               </Bar>
-              <Bar dataKey="precision" name="Precision">
+              <Bar dataKey="precision" name="Precision" radius={[4, 4, 0, 0]}>
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length].precision} />
                 ))}
               </Bar>
-              <Bar dataKey="f1Score" name="F1 Score">
+              <Bar dataKey="f1Score" name="F1 Score" radius={[4, 4, 0, 0]}>
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={colors[index % colors.length].f1} />
                 ))}
