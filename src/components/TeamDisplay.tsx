@@ -47,10 +47,10 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
             >
-              <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm">
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center text-blue-900 dark:text-blue-100">
-                    <Badge variant="default" className="mr-2">Home</Badge>
+                    <Badge variant="default" className="mr-2 transition-all duration-300 hover:scale-110">Home</Badge>
                     {homeTeam.name} Formation
                   </CardTitle>
                 </CardHeader>
@@ -71,10 +71,10 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              <Card className="border-0 shadow-lg bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/20 dark:to-pink-900/20 backdrop-blur-sm">
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/20 dark:to-pink-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center text-red-900 dark:text-red-100">
-                    <Badge variant="destructive" className="mr-2">Away</Badge>
+                    <Badge variant="destructive" className="mr-2 transition-all duration-300 hover:scale-110">Away</Badge>
                     {awayTeam.name} Formation
                   </CardTitle>
                 </CardHeader>
@@ -100,10 +100,10 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm">
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center text-blue-900 dark:text-blue-100">
-                    <Badge variant="default" className="mr-2">Home</Badge>
+                    <Badge variant="default" className="mr-2 transition-all duration-300 hover:scale-110">Home</Badge>
                     {homeTeam.name} Players
                   </CardTitle>
                 </CardHeader>
@@ -123,10 +123,10 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              <Card className="border-0 shadow-lg bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/20 dark:to-pink-900/20 backdrop-blur-sm">
+              <Card className="border-0 shadow-lg bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/20 dark:to-pink-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
                 <CardHeader>
                   <CardTitle className="flex items-center text-red-900 dark:text-red-100">
-                    <Badge variant="destructive" className="mr-2">Away</Badge>
+                    <Badge variant="destructive" className="mr-2 transition-all duration-300 hover:scale-110">Away</Badge>
                     {awayTeam.name} Players
                   </CardTitle>
                 </CardHeader>
