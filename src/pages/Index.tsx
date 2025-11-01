@@ -12,6 +12,8 @@ import { mlService } from "@/services/MLService";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Target, Zap, Trophy } from "lucide-react";
+import MatchStatsCard from "@/components/MatchStatsCard";
 
 const Index = () => {
   const [homeTeam, setHomeTeam] = useState<Team>({
@@ -98,6 +100,12 @@ const Index = () => {
     }
   };
 
+  // Calculate shot efficiency
+  const calculateShotEfficiency = (shots: string, shotsOnTarget: string) => {
+    if (!shots || !shotsOnTarget || parseInt(shots) === 0) return 0;
+    return (parseInt(shotsOnTarget) / parseInt(shots)) * 100;
+  };
+
   return (
     <MainLayout
       trainingIteration={trainingIteration}
@@ -176,6 +184,41 @@ const Index = () => {
           </CardContent>
         </Card>
       </motion.div>
+
+      {/* Match Stats Overview */}
+      {homeTeam.name && awayTeam.name && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+        >
+          <MatchStatsCard
+            title="Shots"
+            homeValue={homeTeam.shots || 0}
+            awayValue={awayTeam.shots || 0}
+            homeLabel={homeTeam.name}
+            awayLabel={awayTeam.name}
+            icon={<Target className="w-4 h-4" />}
+          />
+          <MatchStatsCard
+            title="Shot Efficiency"
+            homeValue={`${calculateShotEfficiency(homeTeam.shots, homeTeam.shotsOnTarget).toFixed(1)}%`}
+            awayValue={`${calculateShotEfficiency(awayTeam.shots, awayTeam.shotsOnTarget).toFixed(1)}%`}
+            homeLabel={homeTeam.name}
+            awayLabel={awayTeam.name}
+            icon={<Zap className="w-4 h-4" />}
+          />
+          <MatchStatsCard
+            title="Red Cards"
+            homeValue={homeTeam.redCards || 0}
+            awayValue={awayTeam.redCards || 0}
+            homeLabel={homeTeam.name}
+            awayLabel={awayTeam.name}
+            icon={<Trophy className="w-4 h-4" />}
+          />
+        </motion.div>
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
