@@ -1,8 +1,7 @@
-
 import React, { useEffect, useRef } from "react";
-import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
+import { Chart, RadarController, RadialLinearScale, PointElement, LineElement, Tooltip, Legend, Filler } from "chart.js";
 
-Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Tooltip, Legend);
+Chart.register(RadarController, RadialLinearScale, PointElement, LineElement, Tooltip, Legend, Filler);
 
 type StatsData = {
   homeTeam: {
@@ -59,6 +58,7 @@ const StatsRadarChart: React.FC<StatsRadarChartProps> = ({ data, className = "" 
                 pointBorderColor: "#fff",
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "rgba(59, 130, 246, 1)",
+                fill: true,
               },
               {
                 label: data.awayTeam.name,
@@ -74,6 +74,7 @@ const StatsRadarChart: React.FC<StatsRadarChartProps> = ({ data, className = "" 
                 pointBorderColor: "#fff",
                 pointHoverBackgroundColor: "#fff",
                 pointHoverBorderColor: "rgba(239, 68, 68, 1)",
+                fill: true,
               },
             ],
           },
@@ -89,24 +90,33 @@ const StatsRadarChart: React.FC<StatsRadarChartProps> = ({ data, className = "" 
                     size: 12,
                   },
                   color: "#4b5563",
+                  usePointStyle: true,
+                  padding: 20,
                 },
               },
               tooltip: {
-                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
                 titleColor: "#111827",
                 bodyColor: "#374151",
                 borderColor: "rgba(229, 231, 235, 1)",
                 borderWidth: 1,
-                padding: 10,
-                boxPadding: 4,
+                padding: 12,
+                boxPadding: 6,
                 usePointStyle: true,
                 bodyFont: {
                   family: "'Inter', sans-serif",
                 },
                 titleFont: {
                   family: "'Inter', sans-serif",
-                  weight: 600, // Changed from "600" to 600 (number)
+                  weight: 600,
                 },
+                callbacks: {
+                  label: function(context) {
+                    const label = context.dataset.label || '';
+                    const value = context.parsed as unknown as number;
+                    return `${label}: ${value}`;
+                  }
+                }
               },
             },
             scales: {
@@ -120,12 +130,23 @@ const StatsRadarChart: React.FC<StatsRadarChartProps> = ({ data, className = "" 
                     family: "'Inter', sans-serif",
                     size: 10,
                   },
+                  stepSize: Math.max(
+                    data.homeTeam.shots, 
+                    data.homeTeam.shotsOnTarget, 
+                    data.homeTeam.goals, 
+                    data.homeTeam.redCards,
+                    data.awayTeam.shots, 
+                    data.awayTeam.shotsOnTarget, 
+                    data.awayTeam.goals, 
+                    data.awayTeam.redCards
+                  ) / 5 || 1
                 },
                 pointLabels: {
                   color: "#4b5563",
                   font: {
                     family: "'Inter', sans-serif",
                     size: 12,
+                    weight: 500,
                   },
                 },
                 grid: {
@@ -138,13 +159,17 @@ const StatsRadarChart: React.FC<StatsRadarChartProps> = ({ data, className = "" 
             },
             elements: {
               line: {
-                borderWidth: 2,
+                borderWidth: 3,
               },
               point: {
-                radius: 3,
-                hoverRadius: 5,
+                radius: 4,
+                hoverRadius: 6,
               },
             },
+            animation: {
+              duration: 2000,
+              easing: 'easeOutQuart'
+            }
           },
         });
       }
