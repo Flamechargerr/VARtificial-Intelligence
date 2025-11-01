@@ -1,18 +1,20 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface ConfidenceBarProps {
   percentage: number;
   color?: string;
   className?: string;
+  modelName?: string;
 }
 
 const ConfidenceBar: React.FC<ConfidenceBarProps> = ({ 
   percentage,
   color = "bg-primary",
-  className = ""
+  className = "",
+  modelName = ""
 }) => {
   // Determine the confidence level display
   const getConfidenceLevel = () => {
@@ -41,8 +43,19 @@ const ConfidenceBar: React.FC<ConfidenceBarProps> = ({
         initial={{ width: 0 }}
         animate={{ width: `${percentage}%` }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className={`h-full ${backgroundGradient}`}
-      />
+        className={`h-full ${backgroundGradient} relative`}
+      >
+        {percentage > 30 && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 0.5 }}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-bold text-white"
+          >
+            {percentage.toFixed(1)}%
+          </motion.span>
+        )}
+      </motion.div>
       <div className="flex justify-between w-full text-[10px] text-gray-600 font-medium absolute top-[-18px]">
         <span>0%</span>
         <span>50%</span>
@@ -60,10 +73,11 @@ const ConfidenceBar: React.FC<ConfidenceBarProps> = ({
               {confidenceLevel} ({percentage.toFixed(1)}%)
             </motion.span>
           </TooltipTrigger>
-          <TooltipContent side="top">
+          <TooltipContent side="top" className="bg-white dark:bg-gray-800">
+            <p className="text-xs font-bold text-gray-900 dark:text-white">{modelName || "Model"} Confidence</p>
             <p className="text-xs">Confidence level: {confidenceLevel}</p>
             <p className="text-xs">Exact confidence: {percentage.toFixed(1)}%</p>
-            <p className="text-xs text-gray-400">Based on historical match data</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">Based on historical match data</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
