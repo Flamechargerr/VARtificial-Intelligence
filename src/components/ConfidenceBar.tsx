@@ -50,7 +50,7 @@ const ConfidenceBar: React.FC<ConfidenceBarProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.5 }}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-bold text-white"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-bold text-white transition-all duration-300"
           >
             {percentage.toFixed(1)}%
           </motion.span>
