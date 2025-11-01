@@ -65,7 +65,7 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
             </div>
           </div>
           
-          <Badge className="text-lg py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg">
+          <Badge className="text-lg py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
             Best Prediction: {bestPrediction.modelName}
           </Badge>
         </div>
@@ -106,7 +106,7 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center text-blue-900 dark:text-blue-100">
                   <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-full mr-3">
@@ -147,7 +147,7 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 backdrop-blur-sm">
+            <Card className="border-0 shadow-xl bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center text-purple-900 dark:text-purple-100">
                   <div className="p-2 bg-purple-100 dark:bg-purple-900/50 rounded-full mr-3">
