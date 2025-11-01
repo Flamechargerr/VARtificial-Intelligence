@@ -39,11 +39,11 @@ const MatchStatsCard: React.FC<MatchStatsCardProps> = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg transition-all duration-300 hover:scale-105">
               <div className="text-2xl font-bold text-blue-700 dark:text-blue-300">{homeValue}</div>
               <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">{homeLabel}</div>
             </div>
-            <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg transition-all duration-300 hover:scale-105">
               <div className="text-2xl font-bold text-red-700 dark:text-red-300">{awayValue}</div>
               <div className="text-xs text-red-600 dark:text-red-400 mt-1">{awayLabel}</div>
             </div>
