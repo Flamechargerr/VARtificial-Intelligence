@@ -1,5 +1,5 @@
 import React from "react";
-import { type Player } from "@/types";
+import { type Player } from "@/utils/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { User, Star, Hash } from "lucide-react";

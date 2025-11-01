@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FootballIcon from "@/components/FootballIcon";
+import FootballIcon from "@/components/icons/FootballIcon";
 import TrainingCycleIndicator from "@/components/TrainingCycleIndicator";
 import TrainingExplanation from "@/components/TrainingExplanation";
 import { Button } from "@/components/ui/button";

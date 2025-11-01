@@ -18,7 +18,7 @@ class PyodideService {
         });
 
         // Dynamically import Pyodide
-        const pyodideModule: any = await import("pyodide");
+        const pyodideModule: any = await import(/* webpackIgnore: true */ "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js");
         const { loadPyodide } = pyodideModule;
         
         // Load Pyodide with specific configuration

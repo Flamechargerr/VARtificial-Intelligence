@@ -88,12 +88,20 @@ VARtificial Intelligence is a cutting-edge football match prediction platform th
 VARtificial-Intelligence/
 ├── public/
 ├── src/
+│   ├── assets/
 │   ├── components/
-│   ├── data/
-│   ├── lib/
+│   │   ├── charts/
+│   │   ├── icons/
+│   │   ├── layout/
+│   │   └── ui/
 │   ├── pages/
 │   ├── services/
-│   ├── types/
+│   ├── utils/
+│   │   ├── constants/
+│   │   ├── data/
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   └── types/
 │   ├── App.css
 │   ├── App.tsx
 │   ├── main.tsx

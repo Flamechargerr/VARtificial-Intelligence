@@ -1,5 +1,5 @@
 import React from "react";
-import { type Player } from "@/types";
+import { type Player } from "@/utils/types";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
