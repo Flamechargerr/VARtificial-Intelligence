@@ -1,19 +1,20 @@
-
-// Mock data for model performance
 export const modelPerformanceData = [
   {
-    name: "Logistic Regression",
-    accuracy: 0.657,
-    precision: 0.92,
-  },
-  {
     name: "Naive Bayes",
-    accuracy: 0.624,
-    precision: 0.95,
+    accuracy: 0.82,
+    precision: 0.85,
+    f1Score: 0.83,
   },
   {
     name: "Random Forest",
-    accuracy: 0.637,
-    precision: 0.84,
+    accuracy: 0.89,
+    precision: 0.91,
+    f1Score: 0.90,
+  },
+  {
+    name: "Logistic Regression",
+    accuracy: 0.87,
+    precision: 0.88,
+    f1Score: 0.87,
   },
 ];
