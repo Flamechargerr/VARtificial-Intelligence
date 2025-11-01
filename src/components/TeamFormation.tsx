@@ -1,15 +1,15 @@
-
 import React from "react";
-import { Player } from "@/types";
-import { Card } from "@/components/ui/card";
-import { Trophy, Star, Award } from "lucide-react";
+import { type Player } from "@/types";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { Users, Trophy, Hash } from "lucide-react";
 
 interface TeamFormationProps {
   teamName: string;
   players: Player[];
   formation: string;
   fifaRanking?: number;
-  className?: string;
 }
 
 const TeamFormation: React.FC<TeamFormationProps> = ({
@@ -17,165 +17,135 @@ const TeamFormation: React.FC<TeamFormationProps> = ({
   players,
   formation,
   fifaRanking,
-  className = ""
 }) => {
-  // Map positions to formation grid areas
-  const getPositionStyle = (position: string) => {
-    const posMap: Record<string, string> = {
-      "GK": "grid-area: gk;",
-      "LB": "grid-area: lb;",
-      "CB": "grid-area: lcb;",
-      "RCB": "grid-area: rcb;",
-      "RB": "grid-area: rb;",
-      "LDM": "grid-area: ldm;",
-      "CDM": "grid-area: cdm;",
-      "RDM": "grid-area: rdm;",
-      "LM": "grid-area: lm;",
-      "CM": "grid-area: lcm;",
-      "RCM": "grid-area: rcm;",
-      "RM": "grid-area: rm;",
-      "LW": "grid-area: lw;",
-      "ST": "grid-area: st;",
-      "RW": "grid-area: rw;",
-      "CAM": "grid-area: cam;",
-      "CF": "grid-area: cf;"
-    };
-    
-    return posMap[position] || "";
-  };
-
-  // Get the grid template based on formation
-  const getFormationGrid = (formation: string) => {
-    const formationMap: Record<string, string> = {
-      "4-3-3": `
-        ".... .... gk  .... ...."
-        ".... lb   .... rb   ...."
-        ".... lcb  .... rcb  ...."
-        "lw   .... cm  .... rw  "
-        ".... .... st  .... ...."
-      `,
-      "4-4-2": `
-        ".... .... gk  .... ...."
-        ".... lb   .... rb   ...."
-        ".... lcb  .... rcb  ...."
-        "lm   lcm  .... rcm  rm  "
-        ".... cf   .... st   ...."
-      `,
-      "4-2-3-1": `
-        ".... .... gk  .... ...."
-        ".... lb   .... rb   ...."
-        ".... lcb  .... rcb  ...."
-        ".... ldm  .... rdm  ...."
-        "lw   .... cam .... rw  "
-        ".... .... st  .... ...."
-      `,
-    };
-    
-    return formationMap[formation] || formationMap["4-3-3"];
-  };
-
-  const formationGrid = getFormationGrid(formation);
+  // Parse formation (e.g., "4-3-3" -> [4, 3, 3])
+  const formationParts = formation.split("-").map(Number);
   
-  // Colors for player rating badges
-  const getRatingColor = (rating: number) => {
-    if (rating >= 9) return "bg-gradient-to-r from-yellow-400 to-yellow-200 text-yellow-900";
-    if (rating >= 8) return "bg-gradient-to-r from-emerald-500 to-emerald-300 text-emerald-900";
-    if (rating >= 7) return "bg-gradient-to-r from-blue-500 to-blue-300 text-blue-900";
-    return "bg-gradient-to-r from-gray-400 to-gray-200 text-gray-900";
-  };
+  // Group players by position
+  const groupedPlayers: Record<string, Player[]> = {};
+  players.forEach(player => {
+    if (!groupedPlayers[player.position]) {
+      groupedPlayers[player.position] = [];
+    }
+    groupedPlayers[player.position].push(player);
+  });
 
-  const teamColorClass = teamName === "Liverpool" || teamName === "Manchester United" || teamName === "Arsenal" ? 
-    "from-red-600 to-red-400" : 
-    teamName === "Chelsea" || teamName === "Manchester City" ? 
-      "from-blue-600 to-blue-400" : 
-      "from-purple-600 to-purple-400";
+  // Get players for each line
+  const getPlayersForLine = (lineIndex: number) => {
+    const positions = ["GK", "DEF", "MID", "FWD"];
+    if (lineIndex === 0) return groupedPlayers["GK"] || [];
+    return groupedPlayers[positions[lineIndex]] || [];
+  };
 
   return (
-    <div className={`px-4 py-6 rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 text-white ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center">
-          <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${teamColorClass} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-            {teamName.charAt(0)}
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-center space-x-2">
+          <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-full">
+            <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
           </div>
-          <h3 className="ml-3 text-xl font-bold">{teamName}</h3>
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white">{teamName}</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400">Formation: {formation}</p>
+          </div>
         </div>
-        <div className="flex items-center">
-          <div className="px-3 py-1 rounded-full bg-gray-700 text-sm font-medium">
-            {formation}
+        
+        {fifaRanking && (
+          <Badge variant="secondary" className="transition-all duration-300 hover:scale-110">
+            <Trophy className="w-3 h-3 mr-1" />
+            FIFA Ranking: #{fifaRanking}
+          </Badge>
+        )}
+      </div>
+      
+      <div className="relative">
+        {/* Football field visualization */}
+        <div className="bg-green-600 rounded-xl p-6 relative overflow-hidden border-4 border-white">
+          {/* Field markings */}
+          <div className="absolute inset-0 border-2 border-white/30 rounded-lg"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white/30 rounded-full"></div>
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-16 border-2 border-white/30 rounded-b-full"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-16 border-2 border-white/30 rounded-t-full"></div>
+          
+          {/* Formation lines */}
+          <div className="space-y-8">
+            {formationParts.map((count, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="flex justify-center space-x-4"
+              >
+                {Array.from({ length: count }).map((_, playerIndex) => {
+                  const playersInLine = getPlayersForLine(index);
+                  const player = playersInLine[playerIndex];
+                  
+                  return (
+                    <motion.div
+                      key={playerIndex}
+                      whileHover={{ scale: 1.1, zIndex: 10 }}
+                      className="relative group"
+                    >
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-white to-gray-100 border-2 border-gray-300 flex items-center justify-center shadow-lg transition-all duration-300 hover:shadow-xl">
+                        {player ? (
+                          <span className="text-xs font-bold text-gray-800">
+                            {player.name.split(" ").map(n => n[0]).join("")}
+                          </span>
+                        ) : (
+                          <Hash className="w-5 h-5 text-gray-400" />
+                        )}
+                      </div>
+                      {player && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 0 }}
+                          className="absolute bottom-full left-1/2 transform -translate-x-1/2 -translate-y-2 
+                                    bg-gray-900 text-white text-xs rounded py-1 px-2 whitespace-nowrap z-50
+                                    opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                        >
+                          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45"></div>
+                          <div className="font-medium">{player.name}</div>
+                          <div className="text-gray-300">{player.position}</div>
+                        </motion.div>
+                      )}
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            ))}
           </div>
-          {fifaRanking && (
-            <div className="ml-2 flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-yellow-500 to-amber-500 text-white">
-              <Trophy className="w-4 h-4 mr-1" />
-              <span className="text-sm font-semibold">#{fifaRanking}</span>
-            </div>
-          )}
         </div>
       </div>
       
-      <div 
-        className="relative mt-4 w-full aspect-[4/3] bg-gradient-to-b from-green-800 to-green-900 rounded-lg overflow-hidden p-4"
-        style={{
-          backgroundImage: "repeating-linear-gradient(to right, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 1px, transparent 1px, transparent 20px), repeating-linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.1) 1px, transparent 1px, transparent 20px)",
-        }}
-      >
-        <div className="pitch-lines absolute inset-0">
-          {/* Center circle */}
-          <div className="absolute left-1/2 top-1/2 w-24 h-24 border-2 border-white/20 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-          {/* Center line */}
-          <div className="absolute left-0 top-1/2 w-full h-0.5 bg-white/20"></div>
-          {/* Penalty areas */}
-          <div className="absolute left-1/2 bottom-0 w-40 h-16 border-t-2 border-x-2 border-white/20 -translate-x-1/2"></div>
-          <div className="absolute left-1/2 top-0 w-40 h-16 border-b-2 border-x-2 border-white/20 -translate-x-1/2"></div>
-        </div>
-
-        <div 
-          className="grid h-full" 
-          style={{ 
-            gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-            gridTemplateRows: "1fr 1fr 1fr 1fr 1fr",
-            gridTemplateAreas: formationGrid
-          }}
-        >
-          {players.slice(0, 11).map((player) => (
-            <div
-              key={player.id}
-              className="flex flex-col items-center justify-center"
-              style={{ [getPositionStyle(player.position).split(":")[0]]: getPositionStyle(player.position).split(":")[1] }}
-            >
-              <div className={`w-11 h-11 rounded-full ${getRatingColor(player.rating)} flex items-center justify-center shadow-lg mb-1 text-sm font-bold relative`}>
-                {player.position === "GK" ? "GK" : player.name.split(" ")[0].charAt(0) + player.name.split(" ").pop()?.charAt(0)}
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-black/70 text-white flex items-center justify-center text-[10px]">
-                  {player.rating.toFixed(1)}
-                </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Card className="transition-all duration-300 hover:shadow-md">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2">
+              <div className="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-full">
+                <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
-              <span className="text-xs font-semibold text-white/80 bg-black/30 px-1 rounded">
-                {player.name.split(" ").pop()}
-              </span>
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Players</p>
+                <p className="text-lg font-bold text-gray-900 dark:text-white">{players.length}</p>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-4 grid grid-cols-3 gap-2">
-        <div className="bg-gradient-to-r from-indigo-800/50 to-indigo-700/50 rounded-lg p-3 text-center">
-          <Star className="w-5 h-5 mx-auto mb-1 text-indigo-300" />
-          <div className="text-sm text-indigo-200">Top Player</div>
-          <div className="font-bold mt-1">{players.sort((a, b) => b.rating - a.rating)[0]?.name || "N/A"}</div>
-        </div>
-        <div className="bg-gradient-to-r from-emerald-800/50 to-emerald-700/50 rounded-lg p-3 text-center">
-          <Award className="w-5 h-5 mx-auto mb-1 text-emerald-300" />
-          <div className="text-sm text-emerald-200">Avg Rating</div>
-          <div className="font-bold mt-1">
-            {players.length > 0 
-              ? (players.reduce((sum, p) => sum + p.rating, 0) / players.length).toFixed(1) 
-              : "N/A"}
-          </div>
-        </div>
-        <div className="bg-gradient-to-r from-amber-800/50 to-amber-700/50 rounded-lg p-3 text-center">
-          <Trophy className="w-5 h-5 mx-auto mb-1 text-amber-300" />
-          <div className="text-sm text-amber-200">League Pos</div>
-          <div className="font-bold mt-1">{Math.floor(Math.random() * 10) + 1}</div>
-        </div>
+          </CardContent>
+        </Card>
+        
+        <Card className="transition-all duration-300 hover:shadow-md">
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2">
+              <div className="p-2 bg-green-100 dark:bg-green-900/50 rounded-full">
+                <Trophy className="w-4 h-4 text-green-600 dark:text-green-400" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Formation</p>
+                <p className="text-lg font-bold text-gray-900 dark:text-white">{formation}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
