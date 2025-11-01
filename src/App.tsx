@@ -108,7 +108,7 @@ const App = () => {
           <div className="mb-8 relative">
             <div className="w-24 h-24 mx-auto mb-6 relative">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-green-400 rounded-full animate-ping opacity-20"></div>
-              <div className="relative w-24 h-24 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center shadow-2xl">
+              <div className="relative w-24 h-24 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center shadow-2xl transition-transform duration-300 hover:scale-110">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
@@ -143,15 +143,15 @@ const App = () => {
           
           {/* Stats display */}
           <div className="mt-12 grid grid-cols-3 gap-6 w-full max-w-md">
-            <div className="bg-black/20 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+            <div className="bg-black/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 transition-all duration-300 hover:scale-105">
               <div className="text-2xl font-bold text-green-400">89%</div>
               <div className="text-xs text-blue-200">RF Accuracy</div>
             </div>
-            <div className="bg-black/20 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+            <div className="bg-black/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 transition-all duration-300 hover:scale-105">
               <div className="text-2xl font-bold text-blue-400">87%</div>
               <div className="text-xs text-blue-200">LR Accuracy</div>
             </div>
-            <div className="bg-black/20 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+            <div className="bg-black/20 backdrop-blur-sm rounded-xl p-4 border border-white/10 transition-all duration-300 hover:scale-105">
               <div className="text-2xl font-bold text-yellow-400">82%</div>
               <div className="text-xs text-blue-200">NB Accuracy</div>
             </div>
