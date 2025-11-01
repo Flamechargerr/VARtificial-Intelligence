@@ -1,10 +1,10 @@
 import React from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
+import SearchableTeamSelect from "./SearchableTeamSelect";
 
 interface TeamStatInputProps {
   teamType: "home" | "away";
@@ -53,40 +53,28 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={`stat-input-card ${bgGradient} border ${borderColor} ${shadowColor} ${className}`}
     >
-      <div className="flex items-center mb-4 space-x-2">
-        <div className={`w-3 h-3 rounded-full ${isHome ? "bg-home-DEFAULT" : "bg-away-DEFAULT"}`}></div>
-        <h3 className={`text-lg font-semibold ${textColor}`}>
+      <div className="flex items-center mb-3 md:mb-4 space-x-2">
+        <div className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full ${isHome ? "bg-home-DEFAULT" : "bg-away-DEFAULT"}`}></div>
+        <h3 className={`text-base md:text-lg font-semibold ${textColor}`}>
           {isHome ? "Home Team" : "Away Team"}
         </h3>
-        <Badge variant={isHome ? "default" : "destructive"} className="ml-auto transition-all duration-300 hover:scale-110">
+        <Badge variant={isHome ? "default" : "destructive"} className="ml-auto text-xs transition-all duration-300 hover:scale-110">
           {isHome ? "HOME" : "AWAY"}
         </Badge>
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor={`${teamType}-team`} className={`mb-1.5 block font-medium ${labelColor}`}>
-            Select {isHome ? "Home" : "Away"} Team *
-          </Label>
-          <Select value={teamName} onValueChange={onTeamChange}>
-            <SelectTrigger id={`${teamType}-team`} className="w-full focused-input bg-white/80 backdrop-blur-sm">
-              <SelectValue placeholder={`Select ${isHome ? "Home" : "Away"} Team`} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {teamOptions.map((team) => (
-                  <SelectItem key={team} value={team}>
-                    {team}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+      <div className="space-y-3 md:space-y-4">
+        <SearchableTeamSelect
+          teamType={teamType}
+          teamName={teamName}
+          onTeamChange={onTeamChange}
+          teamOptions={teamOptions}
+          placeholder={`Search for ${isHome ? "home" : "away"} team...`}
+        />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3 md:gap-4">
           <div>
-            <Label htmlFor={`${teamType}-goals`} className={`mb-1.5 block font-medium ${labelColor}`}>
+            <Label htmlFor={`${teamType}-goals`} className={`mb-1 block font-medium ${labelColor} text-sm md:text-base`}>
               Goals *
             </Label>
             <div className="relative">
@@ -96,16 +84,16 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 min="0"
                 value={goals}
                 onChange={(e) => onGoalsChange(e.target.value)}
-                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                 ⚽
               </div>
             </div>
           </div>
           <div>
-            <Label htmlFor={`${teamType}-shots`} className={`mb-1.5 block font-medium ${labelColor}`}>
+            <Label htmlFor={`${teamType}-shots`} className={`mb-1 block font-medium ${labelColor} text-sm md:text-base`}>
               Shots *
             </Label>
             <div className="relative">
@@ -115,16 +103,16 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 min="0"
                 value={shots}
                 onChange={(e) => onShotsChange(e.target.value)}
-                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                 🎯
               </div>
             </div>
           </div>
           <div>
-            <Label htmlFor={`${teamType}-on-target`} className={`mb-1.5 block font-medium ${labelColor}`}>
+            <Label htmlFor={`${teamType}-on-target`} className={`mb-1 block font-medium ${labelColor} text-sm md:text-base`}>
               On Target *
             </Label>
             <div className="relative">
@@ -134,16 +122,16 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 min="0"
                 value={shotsOnTarget}
                 onChange={(e) => onShotsOnTargetChange(e.target.value)}
-                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                 ✅
               </div>
             </div>
           </div>
           <div>
-            <Label htmlFor={`${teamType}-red-cards`} className={`mb-1.5 block font-medium ${labelColor}`}>
+            <Label htmlFor={`${teamType}-red-cards`} className={`mb-1 block font-medium ${labelColor} text-sm md:text-base`}>
               Red Cards *
             </Label>
             <div className="relative">
@@ -153,10 +141,10 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 min="0"
                 value={redCards}
                 onChange={(e) => onRedCardsChange(e.target.value)}
-                className="focused-input bg-white/80 backdrop-blur-sm pl-8"
+                className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                 🟥
               </div>
             </div>

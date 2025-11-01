@@ -1,9 +1,11 @@
 import React from "react";
-import { type Player } from "@/utils/types";
-import TeamPlayers from "@/components/TeamPlayers";
-import TeamFormation from "@/components/TeamFormation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { type Player } from "@/shared/utils/types";
+import TeamPlayers from "@/shared/components/TeamPlayers";
+import TeamFormation from "@/shared/components/TeamFormation";
+import TeamNews from "@/shared/components/TeamNews";
+import PlayerInjuryReport from "@/shared/components/PlayerInjuryReport";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
+import { Badge } from "@/shared/components/ui/badge";
 import { motion } from "framer-motion";
 
 interface TeamDisplayProps {
@@ -40,7 +42,7 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
       transition={{ duration: 0.5 }}
     >
       {showAdvancedView && (homeTeam.name || awayTeam.name) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 my-4 md:my-6">
           {homeTeam.name && (
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -48,9 +50,9 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
               transition={{ delay: 0.1, duration: 0.5 }}
             >
               <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-blue-900 dark:text-blue-100">
-                    <Badge variant="default" className="mr-2 transition-all duration-300 hover:scale-110">Home</Badge>
+                <CardHeader className="pb-3 md:pb-4">
+                  <CardTitle className="flex items-center text-blue-900 dark:text-blue-100 text-base md:text-lg">
+                    <Badge variant="default" className="mr-2 transition-all duration-300 hover:scale-110 text-xs md:text-sm">Home</Badge>
                     {homeTeam.name} Formation
                   </CardTitle>
                 </CardHeader>
@@ -72,9 +74,9 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
               transition={{ delay: 0.2, duration: 0.5 }}
             >
               <Card className="border-0 shadow-lg bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/20 dark:to-pink-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-red-900 dark:text-red-100">
-                    <Badge variant="destructive" className="mr-2 transition-all duration-300 hover:scale-110">Away</Badge>
+                <CardHeader className="pb-3 md:pb-4">
+                  <CardTitle className="flex items-center text-red-900 dark:text-red-100 text-base md:text-lg">
+                    <Badge variant="destructive" className="mr-2 transition-all duration-300 hover:scale-110 text-xs md:text-sm">Away</Badge>
                     {awayTeam.name} Formation
                   </CardTitle>
                 </CardHeader>
@@ -92,18 +94,66 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
         </div>
       )}
 
-      {(homeTeam.name || awayTeam.name) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+      {/* Team News Section */}
+      {showAdvancedView && (homeTeam.name || awayTeam.name) && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 my-4 md:my-6">
           {homeTeam.name && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
+              <TeamNews teamName={homeTeam.name} />
+            </motion.div>
+          )}
+          {awayTeam.name && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <TeamNews teamName={awayTeam.name} />
+            </motion.div>
+          )}
+        </div>
+      )}
+
+      {/* Player Injury Reports */}
+      {showAdvancedView && (homeTeam.name || awayTeam.name) && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 my-4 md:my-6">
+          {homeTeam.name && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.5 }}
+            >
+              <PlayerInjuryReport teamName={homeTeam.name} />
+            </motion.div>
+          )}
+          {awayTeam.name && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
+            >
+              <PlayerInjuryReport teamName={awayTeam.name} />
+            </motion.div>
+          )}
+        </div>
+      )}
+
+      {(homeTeam.name || awayTeam.name) && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 my-4 md:my-6">
+          {homeTeam.name && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
               <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-blue-900 dark:text-blue-100">
-                    <Badge variant="default" className="mr-2 transition-all duration-300 hover:scale-110">Home</Badge>
+                <CardHeader className="pb-3 md:pb-4">
+                  <CardTitle className="flex items-center text-blue-900 dark:text-blue-100 text-base md:text-lg">
+                    <Badge variant="default" className="mr-2 transition-all duration-300 hover:scale-110 text-xs md:text-sm">Home</Badge>
                     {homeTeam.name} Players
                   </CardTitle>
                 </CardHeader>
@@ -121,12 +171,12 @@ const TeamDisplay: React.FC<TeamDisplayProps> = ({
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
             >
               <Card className="border-0 shadow-lg bg-gradient-to-br from-red-50/50 to-pink-50/50 dark:from-red-900/20 dark:to-pink-900/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-red-900 dark:text-red-100">
-                    <Badge variant="destructive" className="mr-2 transition-all duration-300 hover:scale-110">Away</Badge>
+                <CardHeader className="pb-3 md:pb-4">
+                  <CardTitle className="flex items-center text-red-900 dark:text-red-100 text-base md:text-lg">
+                    <Badge variant="destructive" className="mr-2 transition-all duration-300 hover:scale-110 text-xs md:text-sm">Away</Badge>
                     {awayTeam.name} Players
                   </CardTitle>
                 </CardHeader>
