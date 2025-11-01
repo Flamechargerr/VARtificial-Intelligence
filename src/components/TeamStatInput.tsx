@@ -58,7 +58,7 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
         <h3 className={`text-lg font-semibold ${textColor}`}>
           {isHome ? "Home Team" : "Away Team"}
         </h3>
-        <Badge variant={isHome ? "default" : "destructive"} className="ml-auto">
+        <Badge variant={isHome ? "default" : "destructive"} className="ml-auto transition-all duration-300 hover:scale-110">
           {isHome ? "HOME" : "AWAY"}
         </Badge>
       </div>
