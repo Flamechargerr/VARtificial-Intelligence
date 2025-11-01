@@ -11,7 +11,12 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['pyodide']
+      external: ['https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js'],
+      output: {
+        globals: {
+          'https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js': 'pyodide'
+        }
+      }
     }
   }
 })
