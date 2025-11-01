@@ -185,7 +185,7 @@ const StatsRadarChart: React.FC<StatsRadarChartProps> = ({ data, className = "" 
 
   return (
     <div className={`radar-chart-container ${className}`}>
-      <canvas ref={chartRef} />
+      <canvas ref={chartRef} className="transition-all duration-300 hover:scale-[1.02]" />
     </div>
   );
 };
