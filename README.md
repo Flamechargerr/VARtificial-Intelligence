@@ -1,7 +1,5 @@
 # ⚽ VARtificial Intelligence ⚡🧠 - Predict Football Matches Like a Pro!
 
-![VARtificial Intelligence Banner](https://placehold.co/800x200/1a202c/4299e1?text=VARtificial+Intelligence)
-
 **Advanced Football Match Prediction using Machine Learning** 🚀
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Flamechargerr/VARtificial-Intelligence/blob/main/LICENSE)
@@ -25,17 +23,6 @@ Tired of guessing football match outcomes? **VARtificial Intelligence** is here 
 - **👥 Team Analysis**: Detailed team formation and player information
 - **🔄 Continuous Learning**: Models improve over time with ongoing training cycles
 - **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-
-## 📺 Screenshots - See the Magic in Action! ✨
-
-### Home Page - Your Football Command Center 🏟️
-![Home Page](https://placehold.co/800x400/1a202c/4299e1?text=Home+Page+Dashboard)
-
-### Prediction Results - The Crystal Ball 🔮
-![Prediction Results](https://placehold.co/800x400/1a202c/4299e1?text=Prediction+Results)
-
-### Team Analysis - Deep Dive into Performance 📊
-![Team Analysis](https://placehold.co/800x400/1a202c/4299e1?text=Team+Analysis)
 
 ## ⚙️ Technologies Used - Powered by the Best Tech! 🔧
 
@@ -87,11 +74,10 @@ Tired of guessing football match outcomes? **VARtificial Intelligence** is here 
 ```
 VARtificial-Intelligence/
 ├── public/                 # Static assets and images
-├── src/
+├── src/                    # Source code
 │   ├── core/               # Core application files (App, main, configs)
 │   ├── features/           # Football prediction features (ML services, Python)
-│   ├── shared/             # Shared components, pages, and utilities
-│   └── assets/             # Images and other static assets
+│   └── shared/             # Shared components, pages, and utilities
 ├── index.html              # Main HTML file
 ├── package.json            # Project dependencies and scripts
 ├── tsconfig.json           # TypeScript configuration
