@@ -49,7 +49,7 @@ const TrainingExplanation: React.FC<TrainingExplanationProps> = ({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg"
+              className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg transition-all duration-300 hover:shadow-md"
             >
               <div className="p-2 bg-blue-100 rounded-full">
                 <RefreshCw className="w-5 h-5 text-blue-700" />
@@ -75,7 +75,7 @@ const TrainingExplanation: React.FC<TrainingExplanationProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                <Card className="p-4 border rounded-lg h-full">
+                <Card className="p-4 border rounded-lg h-full transition-all duration-300 hover:shadow-md">
                   <div className="flex items-center space-x-2 mb-3">
                     <div className="p-1.5 bg-indigo-100 rounded-full">
                       <ChartLine className="w-4 h-4 text-indigo-600" />
@@ -124,7 +124,7 @@ const TrainingExplanation: React.FC<TrainingExplanationProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
               >
-                <Card className="p-4 border rounded-lg h-full">
+                <Card className="p-4 border rounded-lg h-full transition-all duration-300 hover:shadow-md">
                   <div className="flex items-center space-x-2 mb-3">
                     <div className="p-1.5 bg-amber-100 rounded-full">
                       <Lightbulb className="w-4 h-4 text-amber-500" />
@@ -157,7 +157,7 @@ const TrainingExplanation: React.FC<TrainingExplanationProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100"
+              className="p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg border border-indigo-100 transition-all duration-300 hover:shadow-md"
             >
               <div className="flex items-center space-x-2 mb-2">
                 <Cpu className="w-5 h-5 text-indigo-600" />
