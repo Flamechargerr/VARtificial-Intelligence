@@ -60,7 +60,7 @@ const TeamInputForm: React.FC<TeamInputFormProps> = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
         >
-          <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm">
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center text-blue-600 dark:text-blue-400">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -93,7 +93,7 @@ const TeamInputForm: React.FC<TeamInputFormProps> = ({
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <Card className="border-0 shadow-xl bg-gradient-to-br from-red-50/50 to-orange-50/50 dark:from-red-900/20 dark:to-orange-900/20 backdrop-blur-sm">
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-red-50/50 to-orange-50/50 dark:from-red-900/20 dark:to-orange-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
             <CardHeader className="pb-4">
               <CardTitle className="flex items-center text-red-600 dark:text-red-400">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
