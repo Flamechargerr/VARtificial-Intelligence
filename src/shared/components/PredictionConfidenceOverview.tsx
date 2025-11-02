@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import DetailedConfidenceIndicator from "./DetailedConfidenceIndicator";
-import { type MatchPrediction } from "@/utils/types";
+import { type MatchPrediction } from "@/shared/utils/types";
 import { BarChart3, Brain, Target, Zap } from "lucide-react";
 
 interface PredictionConfidenceOverviewProps {

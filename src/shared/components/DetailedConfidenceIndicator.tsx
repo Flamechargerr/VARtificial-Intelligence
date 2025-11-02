@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/shared/components/ui/tooltip";
+import { Badge } from "@/shared/components/ui/badge";
 import { Zap, AlertTriangle, CheckCircle } from "lucide-react";
 
 interface DetailedConfidenceIndicatorProps {

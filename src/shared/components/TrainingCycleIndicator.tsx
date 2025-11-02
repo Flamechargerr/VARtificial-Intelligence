@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Brain, RefreshCw, ChartLine, Lightbulb, Terminal } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent } from "@/components/ui/card";
+import { Progress } from "@/shared/components/ui/progress";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import { motion } from "framer-motion";
 
 interface TrainingCycleIndicatorProps {

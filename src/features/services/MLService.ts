@@ -1,5 +1,5 @@
-import { MatchPrediction, Team, ModelPerformance } from '@/utils/types';
-import { footballMatchData } from '@/utils/data/footballMatchData';
+import { MatchPrediction, Team, ModelPerformance } from '@/shared/utils/types';
+import { footballMatchData } from '@/shared/utils/data/footballMatchData';
 import { pyodideService } from './PyodideService';
 
 // Define machine learning service
@@ -53,8 +53,11 @@ class MLService {
       this.isTraining = true;
       console.log("Starting model training with scikit-learn...");
       
-      // Train models using Python service
-      await pyodideService.trainModels(footballMatchData);
+      // Check if Pyodide is ready
+      if (pyodideService.isReady()) {
+        // Train models using Python service
+        await pyodideService.trainModels(footballMatchData);
+      }
       
       // Set default model performance since trainModels doesn't return anything
       this.modelPerformance = [

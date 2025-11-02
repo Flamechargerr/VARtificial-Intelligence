@@ -7,8 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Download } from "lucide-react";
-import { exportPredictions, type ExportData } from "@/utils/exportPredictions";
-import { type MatchPrediction } from "@/utils/types";
+import { exportPredictions, type ExportData } from "@/shared/utils/exportPredictions";
+import { type MatchPrediction } from "@/shared/utils/types";
 
 interface ExportPredictionsButtonProps {
   homeTeam: string;

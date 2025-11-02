@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/components/ui/button";
 import { motion } from "framer-motion";
-import FootballIcon from "@/components/icons/FootballIcon";
+import FootballIcon from "@/shared/components/icons/FootballIcon";
 
 const NotFound = () => {
   return (

@@ -1,4 +1,4 @@
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/shared/utils/hooks/use-toast";
 
 class PyodideService {
   private pyodide: any = null;
@@ -18,12 +18,11 @@ class PyodideService {
         });
 
         // Dynamically import Pyodide
-        const pyodideModule: any = await import(/* webpackIgnore: true */ "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js");
-        const { loadPyodide } = pyodideModule;
+        // Use the locally installed pyodide package instead of CDN
+        const { loadPyodide } = await import("pyodide");
         
         // Load Pyodide with specific configuration
         this.pyodide = await loadPyodide({
-          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/",
           stdout: (msg) => console.log(`Pyodide stdout: ${msg}`),
           stderr: (msg) => console.error(`Pyodide stderr: ${msg}`),
         });
@@ -45,7 +44,7 @@ class PyodideService {
         console.error("Failed to initialize Pyodide:", error);
         toast({
           title: "Initialization Error",
-          description: "Failed to load Python environment",
+          description: "Failed to load Python environment: " + (error as Error).message,
           variant: "destructive",
         });
         reject(error);
