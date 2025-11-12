@@ -151,3 +151,4 @@
 - [2025-11-13 03:04] refactor(pipeline): modularize training pipeline
 - [2025-11-12 19:54] feat(api): serve predictions via REST endpoint
 - [2025-11-13 02:15] perf(model): hyperparameter tuning with Optuna
+- [2025-11-13 03:40] feat(features): venue advantage coefficient
