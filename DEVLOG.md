@@ -433,3 +433,4 @@
 - [2026-03-09 02:48] refactor: optimize render pipeline
 - [2026-03-08 23:42] docs: update API documentation
 - [2026-03-08 21:42] fix: prevent memory leak in effect cleanup
+- [2025-11-22 23:41] fix: correct async state race condition
