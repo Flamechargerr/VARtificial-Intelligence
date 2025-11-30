@@ -972,3 +972,4 @@
 - [2025-11-30 23:25] feat: add error boundary handling
 - [2025-12-01 03:57] style: apply consistent code formatting
 - [2025-12-01 02:51] perf: optimize database query plan
+- [2025-11-30 20:51] fix: correct async state race condition
