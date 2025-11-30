@@ -971,3 +971,4 @@
 - [2025-12-01 00:53] style: responsive layout adjustments
 - [2025-11-30 23:25] feat: add error boundary handling
 - [2025-12-01 03:57] style: apply consistent code formatting
+- [2025-12-01 02:51] perf: optimize database query plan
