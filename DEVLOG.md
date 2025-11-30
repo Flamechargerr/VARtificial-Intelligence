@@ -193,3 +193,4 @@
 - [2025-12-01 02:19] perf(model): hyperparameter tuning with Optuna
 - [2025-12-01 03:38] feat(features): venue advantage coefficient
 - [2025-12-01 03:45] feat(data): integrate live odds API
+- [2025-11-30 23:11] test(model): k-fold cross validation setup
