@@ -188,3 +188,4 @@
 - [2025-12-01 02:52] fix(model): handle missing player injury data
 - [2025-12-01 02:17] feat(viz): add prediction probability gauge
 - [2025-12-01 04:10] feat(features): head-to-head record extraction
+- [2025-11-30 20:23] refactor(pipeline): modularize training pipeline
