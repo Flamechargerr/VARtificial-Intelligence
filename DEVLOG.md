@@ -218,3 +218,4 @@
 - [2025-12-07 04:16] docs(model): document feature importance
 - [2025-12-08 04:12] feat(features): weather impact correlation
 - [2025-12-07 20:21] fix(data): normalize team name variations
+- [2025-12-09 02:41] feat(ui): add match day prediction dashboard
