@@ -225,3 +225,4 @@
 - [2025-12-12 22:14] feat(data): scrape historical EPL match data
 - [2025-12-14 01:14] feat(features): add Elo rating feature engineering
 - [2025-12-14 02:24] feat(features): calculate rolling form average
+- [2025-12-15 03:58] fix(model): handle missing player injury data
