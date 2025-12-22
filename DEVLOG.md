@@ -243,3 +243,4 @@
 - [2025-12-23 02:15] style(ui): add football pitch SVG overlay
 - [2025-12-23 02:49] feat(model): implement XGBoost match predictor
 - [2025-12-22 19:43] feat(data): scrape historical EPL match data
+- [2025-12-22 20:48] feat(features): add Elo rating feature engineering
