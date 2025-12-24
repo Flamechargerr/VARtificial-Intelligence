@@ -250,3 +250,4 @@
 - [2025-12-22 23:10] feat(features): head-to-head record extraction
 - [2025-12-22 22:40] refactor(pipeline): modularize training pipeline
 - [2025-12-24 21:21] feat(api): serve predictions via REST endpoint
+- [2025-12-25 01:15] perf(model): hyperparameter tuning with Optuna
