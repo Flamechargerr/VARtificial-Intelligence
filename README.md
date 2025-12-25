@@ -1,125 +1,137 @@
 # VARtificial Intelligence
 
-**Machine Learning for Football Match Outcome Prediction**
+**Real Machine Learning for Football Match Outcome Prediction**
 
-A web application that uses ensemble machine learning methods to predict Premier League match outcomes. Built with React/TypeScript frontend and Python/scikit-learn for the ML pipeline.
+A full-stack application with a **Python/Flask backend** running real scikit-learn models and a **React/TypeScript frontend**.
 
 ![Python](https://img.shields.io/badge/Python-3.9-blue)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![Flask](https://img.shields.io/badge/Flask-3.0-green)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3-orange)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-## Overview
+## Architecture
 
-This project demonstrates practical application of machine learning classification algorithms for sports outcome prediction. The system uses three ensemble methods and achieves up to **68% accuracy** on Premier League match predictions.
+```
+┌─────────────────┐      HTTP/REST      ┌─────────────────┐
+│  React Frontend │ ◄─────────────────► │  Flask Backend  │
+│   (TypeScript)  │                     │    (Python)     │
+└─────────────────┘                     └─────────────────┘
+                                               │
+                                               ▼
+                                        ┌─────────────────┐
+                                        │  scikit-learn   │
+                                        │     Models      │
+                                        └─────────────────┘
+```
 
-### Key Features
+## Quick Start
 
-- **Ensemble Methods**: Naive Bayes, Random Forest, Logistic Regression
-- **In-Browser ML**: Python models run via Pyodide (WebAssembly)
-- **Real Data**: Trained on 95 Premier League 2022-23 matches
-- **Cross-Validated**: 5-fold CV for reliable performance metrics
-
-## Model Performance
-
-| Model | Accuracy | Precision | F1 Score |
-|-------|----------|-----------|----------|
-| Naive Bayes | 62% | 63% | 61% |
-| **Random Forest** | **68%** | **69%** | **68%** |
-| Logistic Regression | 65% | 66% | 65% |
-
-*Note: Random baseline for 3-way classification is ~33%. Our models significantly outperform this baseline.*
-
-## Installation
+### 1. Start the Python Backend
 
 ```bash
-# Clone the repository
-git clone https://github.com/Flamechargerr/VARtificial-Intelligence.git
-cd VARtificial-Intelligence
+cd backend
+pip install -r requirements.txt
+python app.py
+```
 
-# Install dependencies
+Backend runs at `http://localhost:5000`
+
+### 2. Start the React Frontend
+
+```bash
 npm install
-
-# Start development server
 npm run dev
+```
+
+Frontend runs at `http://localhost:5173`
+
+## ML Models
+
+The backend uses three classifiers trained on Premier League 2022-23 data:
+
+| Model | Algorithm | Use Case |
+|-------|-----------|----------|
+| **Naive Bayes** | Gaussian NB | Probabilistic baseline |
+| **Random Forest** | 100 trees, max_depth=10 | Best accuracy |
+| **Logistic Regression** | L2 regularization | Linear baseline |
+
+### Features Used
+
+- Goal difference
+- Shot difference
+- Shot efficiency (on-target ratio)
+- Red card impact
+
+## API Endpoints
+
+### `GET /api/health`
+Health check.
+
+### `GET /api/models`
+Get model performance metrics.
+
+### `POST /api/predict`
+Make a prediction.
+
+```json
+{
+  "home_goals": 2,
+  "home_shots": 15,
+  "home_shots_on_target": 8,
+  "home_red_cards": 0,
+  "away_goals": 1,
+  "away_shots": 10,
+  "away_shots_on_target": 5,
+  "away_red_cards": 0
+}
 ```
 
 ## Project Structure
 
 ```
 VARtificial-Intelligence/
-├── src/
-│   ├── features/
-│   │   ├── python/          # Python ML code (runs via Pyodide)
-│   │   │   ├── models/      # ML model implementations
-│   │   │   ├── feature_engineering.py
-│   │   │   └── model_evaluation.py
-│   │   └── services/        # TypeScript ML service layer
-│   └── shared/
-│       ├── components/      # React UI components
-│       ├── pages/           # Application pages
-│       └── utils/           # Utilities and data
-├── notebooks/               # Jupyter notebooks for analysis
-│   └── 01_model_training.ipynb
-├── requirements.txt         # Python dependencies
+├── backend/                 # Python Flask API
+│   ├── app.py              # Flask application
+│   ├── model.py            # ML model implementation
+│   ├── requirements.txt    # Python dependencies
+│   └── README.md           # Deployment guide
+├── src/                    # React frontend
+│   ├── features/           # ML service integration
+│   └── shared/             # UI components
+├── notebooks/              # Jupyter notebooks
 └── README.md
 ```
 
-## Methodology
+## Deployment
 
-### Feature Engineering
+### Backend (Render/Railway)
 
-The model uses the following features derived from match statistics:
+1. Deploy `backend/` folder to Render or Railway
+2. Set start command: `gunicorn app:app`
+3. Get your API URL
 
-- **Goal Difference**: `home_goals - away_goals`
-- **Shot Efficiency**: `shots_on_target / total_shots`
-- **Shot Difference**: `home_shots - away_shots`
-- **Red Card Impact**: Penalty factor for red cards
+### Frontend (Vercel)
 
-### Training Pipeline
+1. Set environment variable: `VITE_API_URL=https://your-backend-url`
+2. Deploy to Vercel
 
-1. Data preprocessing and feature extraction
-2. Feature scaling using StandardScaler
-3. 5-fold stratified cross-validation
-4. Model selection based on accuracy and F1 score
+See `backend/README.md` for detailed instructions.
 
 ## Tech Stack
 
+**Backend:**
+- Python 3.9+
+- Flask 3.0
+- scikit-learn 1.3
+- NumPy
+
 **Frontend:**
-- React 18 with TypeScript
-- Tailwind CSS for styling
-- Recharts for visualizations
-
-**ML Backend:**
-- Python 3.9+ with scikit-learn
-- Pyodide for in-browser Python execution
-- NumPy/Pandas for data processing
-
-## Limitations & Future Work
-
-### Current Limitations
-
-- **Dataset Size**: Only 95 matches from one season
-- **In-Game Stats**: Features require current match statistics
-- **Accuracy Ceiling**: Football is inherently unpredictable
-
-### Planned Improvements
-
-- [ ] Historical team performance data
-- [ ] Pre-match prediction capability
-- [ ] Player-level features
-- [ ] Deep learning experiments
-
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+- React 18
+- TypeScript 5
+- Tailwind CSS
+- Recharts
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file.
-
-## Acknowledgments
-
-- Premier League match data from the 2022-23 season
-- scikit-learn for ML implementations
-- Pyodide team for in-browser Python support
+MIT License - see [LICENSE](LICENSE)
