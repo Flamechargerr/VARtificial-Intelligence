@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
-import { 
-  generateHeatmapData, 
-  getHeatmapColor, 
+import {
+  generateHeatmapData,
+  getHeatmapColor,
   getHeatmapOpacity,
-  type HeatmapData 
+  type HeatmapData
 } from "@/shared/utils/heatmapService";
 import { Target, Trophy, TrendingUp } from "lucide-react";
 
@@ -21,10 +21,10 @@ interface PredictionHeatmapProps {
   className?: string;
 }
 
-const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({ 
+const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({
   homeTeam,
   awayTeam,
-  className = "" 
+  className = ""
 }) => {
   const [heatmapData, setHeatmapData] = useState<HeatmapData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -87,9 +87,14 @@ const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({
   return (
     <Card className={`w-full ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center">
-          <Target className="mr-2 h-5 w-5" />
-          Prediction Heatmap: {homeTeam.name} vs {awayTeam.name}
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center">
+            <Target className="mr-2 h-5 w-5" />
+            Prediction Heatmap: {homeTeam.name} vs {awayTeam.name}
+          </span>
+          <Badge variant="outline" className="text-xs text-blue-600 border-blue-300">
+            Statistical Model
+          </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -146,7 +151,7 @@ const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({
                   </div>
                 ))}
               </div>
-              
+
               {/* Heatmap grid */}
               {[...Array(heatmapData.maxX + 1)].map((_, x) => (
                 <div key={x} className="flex items-center mb-1">
@@ -154,7 +159,7 @@ const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({
                   <div className="w-8 text-xs text-gray-500 text-right pr-1">
                     {x}
                   </div>
-                  
+
                   {/* Heatmap cells */}
                   {[...Array(heatmapData.maxY + 1)].map((_, y) => {
                     const cell = heatmapData.cells.find(c => c.x === x && c.y === y);
@@ -182,7 +187,7 @@ const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({
                   })}
                 </div>
               ))}
-              
+
               {/* X-axis label */}
               <div className="flex mt-2">
                 <div className="w-8"></div>
@@ -192,7 +197,7 @@ const PredictionHeatmap: React.FC<PredictionHeatmapProps> = ({
               </div>
             </div>
           </div>
-          
+
           {/* Y-axis label */}
           <div className="text-xs text-gray-500 text-center mt-2">
             {awayTeam.name} Goals

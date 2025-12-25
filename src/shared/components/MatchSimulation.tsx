@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
-import { 
-  simulateMatch, 
+import {
+  simulateMatch,
   type MatchSimulationResult,
-  type SimulationEvent 
+  type SimulationEvent
 } from "@/shared/utils/matchSimulationService";
 import { Play, Pause, RotateCcw, Trophy, Target, Shield } from "lucide-react";
 
@@ -28,7 +28,7 @@ interface MatchSimulationProps {
   onSimulationComplete?: (result: MatchSimulationResult) => void;
 }
 
-const MatchSimulation: React.FC<MatchSimulationProps> = ({ 
+const MatchSimulation: React.FC<MatchSimulationProps> = ({
   homeTeam,
   awayTeam,
   className = "",
@@ -43,11 +43,11 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
     setIsSimulating(true);
     setCurrentEventIndex(0);
     setLiveScore({ home: 0, away: 0 });
-    
+
     // Simulate the match
     const result = simulateMatch(homeTeam, awayTeam);
     setSimulationResult(result);
-    
+
     if (onSimulationComplete) {
       onSimulationComplete(result);
     }
@@ -63,15 +63,15 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
   // Process events as they happen
   useEffect(() => {
     if (!isSimulating || !simulationResult) return;
-    
+
     if (currentEventIndex < simulationResult.events.length) {
       const event = simulationResult.events[currentEventIndex];
       setLiveScore(event.score);
-      
+
       const timer = setTimeout(() => {
         setCurrentEventIndex(prev => prev + 1);
       }, 1000); // Show each event for 1 second
-      
+
       return () => clearTimeout(timer);
     } else if (currentEventIndex === simulationResult.events.length) {
       // Simulation complete
@@ -89,9 +89,12 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
             <span className="flex items-center">
               <Trophy className="mr-2 h-5 w-5" />
               Match Simulation
+              <Badge variant="outline" className="ml-2 text-xs text-amber-600 border-amber-300">
+                Simulated
+              </Badge>
             </span>
-            <Button 
-              onClick={handleStartSimulation} 
+            <Button
+              onClick={handleStartSimulation}
               disabled={isSimulating}
               className="flex items-center"
             >
@@ -115,7 +118,7 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
   }
 
   const currentEvent = simulationResult.events[currentEventIndex - 1];
-  
+
   return (
     <Card className={`w-full ${className}`}>
       <CardHeader>
@@ -126,8 +129,8 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
           </span>
           <div className="flex space-x-2">
             {isSimulating ? (
-              <Button 
-                onClick={() => setIsSimulating(false)} 
+              <Button
+                onClick={() => setIsSimulating(false)}
                 variant="outline"
                 className="flex items-center"
               >
@@ -135,8 +138,8 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
                 Pause
               </Button>
             ) : (
-              <Button 
-                onClick={handleStartSimulation} 
+              <Button
+                onClick={handleStartSimulation}
                 disabled={isSimulating}
                 className="flex items-center"
               >
@@ -144,8 +147,8 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
                 Re-run
               </Button>
             )}
-            <Button 
-              onClick={handleResetSimulation} 
+            <Button
+              onClick={handleResetSimulation}
               variant="outline"
               className="flex items-center"
             >
@@ -272,10 +275,10 @@ const MatchSimulation: React.FC<MatchSimulationProps> = ({
         {/* Progress Indicator */}
         {isSimulating && (
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div 
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300" 
-              style={{ 
-                width: `${(currentEventIndex / Math.max(1, simulationResult.events.length)) * 100}%` 
+            <div
+              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+              style={{
+                width: `${(currentEventIndex / Math.max(1, simulationResult.events.length)) * 100}%`
               }}
             ></div>
           </div>

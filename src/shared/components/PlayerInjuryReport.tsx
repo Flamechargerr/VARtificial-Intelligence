@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
-import { 
-  getTeamInjuryReports, 
-  getInjurySeverityColor, 
-  getInjurySeverityBgColor, 
+import {
+  getTeamInjuryReports,
+  getInjurySeverityColor,
+  getInjurySeverityBgColor,
   getInjuryStatusColor,
   getDaysUntilReturn,
-  type InjuryReport 
+  type InjuryReport
 } from "@/shared/utils/injuryService";
 import { AlertTriangle, Clock, User, Activity } from "lucide-react";
 
@@ -16,9 +16,9 @@ interface PlayerInjuryReportProps {
   className?: string;
 }
 
-const PlayerInjuryReport: React.FC<PlayerInjuryReportProps> = ({ 
+const PlayerInjuryReport: React.FC<PlayerInjuryReportProps> = ({
   teamName,
-  className = "" 
+  className = ""
 }) => {
   const [injuryReports, setInjuryReports] = useState<InjuryReport[]>([]);
   const [loading, setLoading] = useState(true);
@@ -79,9 +79,14 @@ const PlayerInjuryReport: React.FC<PlayerInjuryReportProps> = ({
   return (
     <Card className={`w-full ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center">
-          <AlertTriangle className="mr-2 h-5 w-5" />
-          Player Injury Report: {teamName}
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center">
+            <AlertTriangle className="mr-2 h-5 w-5" />
+            Player Injury Report: {teamName}
+          </span>
+          <Badge variant="outline" className="text-xs text-amber-600 border-amber-300">
+            Example Data
+          </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -89,8 +94,8 @@ const PlayerInjuryReport: React.FC<PlayerInjuryReportProps> = ({
           {injuryReports.map((report) => {
             const daysUntilReturn = getDaysUntilReturn(report.expectedReturn);
             return (
-              <div 
-                key={report.playerId} 
+              <div
+                key={report.playerId}
                 className="p-4 rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start">
@@ -103,36 +108,36 @@ const PlayerInjuryReport: React.FC<PlayerInjuryReportProps> = ({
                       {report.injuryType}
                     </div>
                   </div>
-                  <Badge 
+                  <Badge
                     className={`${getInjurySeverityBgColor(report.severity)} ${getInjurySeverityColor(report.severity)}`}
                   >
                     {report.severity.charAt(0).toUpperCase() + report.severity.slice(1)}
                   </Badge>
                 </div>
-                
+
                 <div className="mt-3 text-sm">
                   <p className="text-gray-700 dark:text-gray-300">
                     {report.description}
                   </p>
                 </div>
-                
+
                 <div className="flex justify-between items-center mt-3">
                   <div className="flex items-center text-sm">
                     <Clock className="mr-1 h-4 w-4" />
                     <span>
-                      {daysUntilReturn > 0 
-                        ? `${daysUntilReturn} day${daysUntilReturn !== 1 ? 's' : ''} until return` 
+                      {daysUntilReturn > 0
+                        ? `${daysUntilReturn} day${daysUntilReturn !== 1 ? 's' : ''} until return`
                         : 'Available'}
                     </span>
                   </div>
-                  <Badge 
+                  <Badge
                     variant={report.status === 'fit' ? 'default' : report.status === 'recovering' ? 'secondary' : 'destructive'}
                     className={getInjuryStatusColor(report.status)}
                   >
                     {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
                   </Badge>
                 </div>
-                
+
                 <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
                   Expected return: {new Date(report.expectedReturn).toLocaleDateString()}
                 </div>
@@ -140,7 +145,7 @@ const PlayerInjuryReport: React.FC<PlayerInjuryReportProps> = ({
             );
           })}
         </div>
-        
+
         <div className="pt-3 border-t border-gray-200 dark:border-gray-700">
           <div className="flex items-center justify-between text-sm">
             <span className="text-gray-600 dark:text-gray-400">Total Injuries</span>

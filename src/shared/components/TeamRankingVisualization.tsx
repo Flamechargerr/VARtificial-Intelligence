@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
-import { 
-  getAllTeamRankings, 
-  getTeamRanking, 
-  getTopTeams, 
+import {
+  getAllTeamRankings,
+  getTeamRanking,
+  getTopTeams,
   getTeamsInRange,
   getFormIndicatorColor,
   getPositionColor,
   getPositionBadgeColor,
-  type TeamRanking 
+  type TeamRanking
 } from "@/shared/utils/teamRankingService";
 import { Trophy, TrendingUp, Target, Shield } from "lucide-react";
 
@@ -19,10 +19,10 @@ interface TeamRankingVisualizationProps {
   className?: string;
 }
 
-const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({ 
+const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
   selectedTeam,
   showTopTeams = 10,
-  className = "" 
+  className = ""
 }) => {
   const [rankings, setRankings] = useState<TeamRanking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +36,7 @@ const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
     try {
       setLoading(true);
       let data: TeamRanking[] = [];
-      
+
       switch (viewMode) {
         case 'full':
           data = getAllTeamRankings();
@@ -56,7 +56,7 @@ const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
           }
           break;
       }
-      
+
       setRankings(data);
     } catch (error) {
       console.error("Error loading team rankings:", error);
@@ -94,16 +94,19 @@ const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
           <span className="flex items-center">
             <Trophy className="mr-2 h-5 w-5" />
             League Table
+            <Badge variant="outline" className="ml-2 text-xs text-green-600 border-green-300">
+              2022-23 Season
+            </Badge>
           </span>
           <div className="flex space-x-1">
-            <Badge 
+            <Badge
               variant={viewMode === 'top' ? "default" : "secondary"}
               className="cursor-pointer text-xs"
               onClick={() => handleViewModeChange('top')}
             >
               Top {showTopTeams}
             </Badge>
-            <Badge 
+            <Badge
               variant={viewMode === 'full' ? "default" : "secondary"}
               className="cursor-pointer text-xs"
               onClick={() => handleViewModeChange('full')}
@@ -111,7 +114,7 @@ const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
               Full Table
             </Badge>
             {selectedTeam && (
-              <Badge 
+              <Badge
                 variant={viewMode === 'selected' ? "default" : "secondary"}
                 className="cursor-pointer text-xs"
                 onClick={() => handleViewModeChange('selected')}
@@ -143,13 +146,12 @@ const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
             </thead>
             <tbody>
               {rankings.map((team) => (
-                <tr 
-                  key={team.teamName} 
-                  className={`border-b hover:bg-gray-50 dark:hover:bg-gray-800 ${
-                    selectedTeam && team.teamName === selectedTeam 
-                      ? "bg-blue-50 dark:bg-blue-900/30 font-medium" 
+                <tr
+                  key={team.teamName}
+                  className={`border-b hover:bg-gray-50 dark:hover:bg-gray-800 ${selectedTeam && team.teamName === selectedTeam
+                      ? "bg-blue-50 dark:bg-blue-900/30 font-medium"
                       : ""
-                  }`}
+                    }`}
                 >
                   <td className={`py-2 pl-2 font-medium ${getPositionColor(team.position)}`}>
                     {team.position}
@@ -165,18 +167,17 @@ const TeamRankingVisualization: React.FC<TeamRankingVisualizationProps> = ({
                   <td className="text-center py-2 text-red-600 dark:text-red-400">{team.losses}</td>
                   <td className="text-center py-2">{team.goalsFor}</td>
                   <td className="text-center py-2">{team.goalsAgainst}</td>
-                  <td className={`text-center py-2 font-medium ${
-                    team.goalDifference > 0 ? "text-green-600 dark:text-green-400" : 
-                    team.goalDifference < 0 ? "text-red-600 dark:text-red-400" : ""
-                  }`}>
+                  <td className={`text-center py-2 font-medium ${team.goalDifference > 0 ? "text-green-600 dark:text-green-400" :
+                      team.goalDifference < 0 ? "text-red-600 dark:text-red-400" : ""
+                    }`}>
                     {team.goalDifference > 0 ? '+' : ''}{team.goalDifference}
                   </td>
                   <td className="text-center py-2 font-bold">{team.points}</td>
                   <td className="text-center py-2">
                     <div className="flex justify-center space-x-1">
                       {team.form.map((result, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className={`w-5 h-5 rounded-full flex items-center justify-center text-xs text-white ${getFormIndicatorColor(result)}`}
                         >
                           {result}

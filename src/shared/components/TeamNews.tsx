@@ -56,6 +56,9 @@ const TeamNews: React.FC<TeamNewsProps> = ({ teamName, className = "" }) => {
           <CardTitle className="flex items-center">
             <Newspaper className="w-5 h-5 mr-2" />
             {teamName} News
+            <Badge variant="outline" className="ml-2 text-xs text-amber-600 border-amber-300">
+              Example
+            </Badge>
           </CardTitle>
           {news.length > 0 && (
             <Badge variant="secondary">{news.length} articles</Badge>
@@ -94,11 +97,10 @@ const TeamNews: React.FC<TeamNewsProps> = ({ teamName, className = "" }) => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${
-                      selectedNews?.id === item.id
+                    className={`p-4 rounded-lg border cursor-pointer transition-all duration-200 hover:shadow-md ${selectedNews?.id === item.id
                         ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
                         : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
-                    }`}
+                      }`}
                     onClick={() => setSelectedNews(selectedNews?.id === item.id ? null : item)}
                   >
                     {item.imageUrl && (

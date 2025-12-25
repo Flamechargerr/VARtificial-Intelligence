@@ -13,10 +13,10 @@ interface TeamPlayersProps {
 
 const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = false }) => {
   const [showStatistics, setShowStatistics] = useState(false);
-  
+
   // Determine which players to display
   const displayedPlayers = showAll ? players : players.slice(0, 5);
-  
+
   // Group players by position
   const groupedPlayers: Record<string, Player[]> = {};
   displayedPlayers.forEach(player => {
@@ -25,7 +25,7 @@ const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = 
     }
     groupedPlayers[player.position].push(player);
   });
-  
+
   // Sort positions: GK, DEF, MID, FWD
   const sortedPositions = Object.keys(groupedPlayers).sort((a, b) => {
     const order: Record<string, number> = { GK: 0, DEF: 1, MID: 2, FWD: 3 };
@@ -42,6 +42,9 @@ const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = 
           <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-white">
             {teamName} Players
           </h3>
+          <span className="text-xs px-1.5 py-0.5 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded border border-green-200 dark:border-green-700">
+            2022-23
+          </span>
         </div>
         {players.length > 0 && (
           <button
@@ -53,7 +56,7 @@ const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = 
           </button>
         )}
       </div>
-      
+
       {showStatistics ? (
         <PlayerStatisticsVisualization players={players} teamName={teamName} />
       ) : (
@@ -74,7 +77,7 @@ const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = 
                     ({groupedPlayers[position].length})
                   </span>
                 </div>
-                
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3">
                   {groupedPlayers[position].map((player, index) => (
                     <motion.div
@@ -103,7 +106,7 @@ const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = 
                                 </div>
                               )}
                             </div>
-                            
+
                             <div className="flex-1 min-w-0">
                               <h5 className="text-xs md:text-sm font-medium text-gray-900 dark:text-white truncate">
                                 {player.name || "Unknown Player"}
@@ -126,7 +129,7 @@ const TeamPlayers: React.FC<TeamPlayersProps> = ({ teamName, players, showAll = 
               </motion.div>
             ))}
           </div>
-          
+
           {!showAll && players.length > 5 && (
             <motion.div
               initial={{ opacity: 0 }}

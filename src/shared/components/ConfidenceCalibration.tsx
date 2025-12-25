@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
 import { Progress } from "@/shared/components/ui/progress";
-import { 
-  getCalibrationData, 
-  calibrateConfidence, 
-  getCalibrationStatus, 
+import {
+  getCalibrationData,
+  calibrateConfidence,
+  getCalibrationStatus,
   getCalibrationAdvice,
-  type CalibrationData 
+  type CalibrationData
 } from "@/shared/utils/confidenceCalibration";
 import { Target, CheckCircle, AlertTriangle, Info } from "lucide-react";
 
@@ -17,10 +17,10 @@ interface ConfidenceCalibrationProps {
   className?: string;
 }
 
-const ConfidenceCalibration: React.FC<ConfidenceCalibrationProps> = ({ 
-  modelId, 
+const ConfidenceCalibration: React.FC<ConfidenceCalibrationProps> = ({
+  modelId,
   rawConfidence,
-  className = "" 
+  className = ""
 }) => {
   const [calibrationData, setCalibrationData] = useState<CalibrationData | null>(null);
   const [calibratedConfidence, setCalibratedConfidence] = useState<number>(0);
@@ -35,7 +35,7 @@ const ConfidenceCalibration: React.FC<ConfidenceCalibrationProps> = ({
       setLoading(true);
       const data = getCalibrationData(modelId);
       setCalibrationData(data);
-      
+
       if (data) {
         const calibrated = calibrateConfidence(modelId, rawConfidence);
         setCalibratedConfidence(calibrated);
@@ -87,15 +87,20 @@ const ConfidenceCalibration: React.FC<ConfidenceCalibrationProps> = ({
   return (
     <Card className={`w-full ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center">
-          <Target className="mr-2 h-5 w-5" />
-          Confidence Calibration
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center">
+            <Target className="mr-2 h-5 w-5" />
+            Confidence Calibration
+          </span>
+          <Badge variant="outline" className="text-xs text-amber-600 border-amber-300">
+            Example Data
+          </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Calibration Status */}
         <div className="text-center">
-          <Badge 
+          <Badge
             variant={calibrationData.calibrationScore < 0.1 ? "default" : calibrationData.calibrationScore < 0.2 ? "secondary" : "destructive"}
             className="text-sm"
           >
@@ -135,11 +140,11 @@ const ConfidenceCalibration: React.FC<ConfidenceCalibrationProps> = ({
           <div className="h-32 relative border rounded-lg bg-gray-50 dark:bg-gray-800">
             {/* Perfect calibration line (diagonal) */}
             <svg className="absolute inset-0 w-full h-full">
-              <line 
-                x1="0" y1="100%" 
-                x2="100%" y2="0" 
-                stroke="#94a3b8" 
-                strokeWidth="1" 
+              <line
+                x1="0" y1="100%"
+                x2="100%" y2="0"
+                stroke="#94a3b8"
+                strokeWidth="1"
                 strokeDasharray="4,4"
               />
               {/* Actual calibration points */}
@@ -147,12 +152,12 @@ const ConfidenceCalibration: React.FC<ConfidenceCalibrationProps> = ({
                 const x = (point.confidence / 100) * 100;
                 const y = 100 - (point.accuracy / 100) * 100;
                 return (
-                  <circle 
+                  <circle
                     key={index}
-                    cx={`${x}%`} 
-                    cy={`${y}%`} 
-                    r="3" 
-                    fill="#3b82f6" 
+                    cx={`${x}%`}
+                    cy={`${y}%`}
+                    r="3"
+                    fill="#3b82f6"
                   />
                 );
               })}

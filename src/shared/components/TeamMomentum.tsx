@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
 import { Progress } from "@/shared/components/ui/progress";
-import { 
-  getTeamMomentum, 
-  getMomentumColor, 
-  getMomentumBgColor, 
+import {
+  getTeamMomentum,
+  getMomentumColor,
+  getMomentumBgColor,
   getFormIndicatorColor,
   getFormTrendIcon,
-  type MomentumData 
+  type MomentumData
 } from "@/shared/utils/momentumService";
 import { TrendingUp, Target, Shield, Zap } from "lucide-react";
 
@@ -17,9 +17,9 @@ interface TeamMomentumProps {
   className?: string;
 }
 
-const TeamMomentum: React.FC<TeamMomentumProps> = ({ 
+const TeamMomentum: React.FC<TeamMomentumProps> = ({
   teamName,
-  className = "" 
+  className = ""
 }) => {
   const [momentumData, setMomentumData] = useState<MomentumData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -77,9 +77,14 @@ const TeamMomentum: React.FC<TeamMomentumProps> = ({
   return (
     <Card className={`w-full ${className}`}>
       <CardHeader>
-        <CardTitle className="flex items-center">
-          <TrendingUp className="mr-2 h-5 w-5" />
-          Team Momentum: {teamName}
+        <CardTitle className="flex items-center justify-between">
+          <span className="flex items-center">
+            <TrendingUp className="mr-2 h-5 w-5" />
+            Team Momentum: {teamName}
+          </span>
+          <Badge variant="outline" className="text-xs text-amber-600 border-amber-300">
+            Example Data
+          </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -106,8 +111,8 @@ const TeamMomentum: React.FC<TeamMomentumProps> = ({
               {momentumData.momentumScore}/100
             </span>
           </div>
-          <Progress 
-            value={momentumData.momentumScore} 
+          <Progress
+            value={momentumData.momentumScore}
             className="h-2"
           />
         </div>
@@ -121,8 +126,8 @@ const TeamMomentum: React.FC<TeamMomentumProps> = ({
           <div className="flex justify-between items-center">
             <div className="flex space-x-1">
               {momentumData.currentForm.map((result, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs text-white ${getFormIndicatorColor(result)}`}
                 >
                   {result}
@@ -181,8 +186,8 @@ const TeamMomentum: React.FC<TeamMomentumProps> = ({
               </Badge>
             </div>
             <div className="mt-2 w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-              <div 
-                className="bg-blue-500 h-2 rounded-full" 
+              <div
+                className="bg-blue-500 h-2 rounded-full"
                 style={{ width: `${(momentumData.cleanSheets / 5) * 100}%` }}
               ></div>
             </div>
