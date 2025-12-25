@@ -71,7 +71,7 @@ const TrainingCycleIndicator: React.FC<TrainingCycleIndicatorProps> = ({
 
         <p className="text-[10px] text-slate-500 mt-3">
           Models trained on Premier League 2022-23 match data.
-          Predictions are made using in-browser inference via Pyodide.
+          Predictions powered by Python/Flask backend with scikit-learn.
         </p>
       </motion.div>
     </div>
