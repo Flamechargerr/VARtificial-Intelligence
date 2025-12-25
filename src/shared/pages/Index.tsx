@@ -19,10 +19,7 @@ import TeamComparison from "@/shared/components/TeamComparison";
 import TeamInputSkeleton from "@/shared/components/TeamInputSkeleton";
 import PredictionResultsSkeleton from "@/shared/components/PredictionResultsSkeleton";
 import TeamComparisonSkeleton from "@/shared/components/TeamComparisonSkeleton";
-import TeamPerformanceComparison from "@/shared/components/TeamPerformanceComparison";
 import PredictionAccuracyStats from "@/shared/components/PredictionAccuracyStats";
-import HeadToHeadStats from "@/shared/components/HeadToHeadStats";
-import WeatherImpact from "@/shared/components/WeatherImpact";
 import TeamMomentum from "@/shared/components/TeamMomentum";
 import TeamRankingVisualization from "@/shared/components/TeamRankingVisualization";
 
@@ -265,36 +262,7 @@ const Index = () => {
         </motion.div>
       )}
 
-      {/* Weather Impact */}
-      {homeTeam.name && awayTeam.name && !isLoading && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mb-8 md:mb-12"
-        >
-          <WeatherImpact
-            location={getLocationForTeam(homeTeam.name)}
-            homeTeam={homeTeam.name}
-            awayTeam={awayTeam.name}
-          />
-        </motion.div>
-      )}
 
-      {/* Head-to-Head Stats */}
-      {homeTeam.name && awayTeam.name && !isLoading && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 0.5 }}
-          className="mb-8 md:mb-12"
-        >
-          <HeadToHeadStats
-            homeTeam={homeTeam.name}
-            awayTeam={awayTeam.name}
-          />
-        </motion.div>
-      )}
 
       {/* Team Comparison */}
       {homeTeam.name && awayTeam.name && !isLoading && (
@@ -344,20 +312,7 @@ const Index = () => {
         </motion.div>
       )}
 
-      {/* Team Performance Comparison */}
-      {homeTeam.name && awayTeam.name && !isLoading && showResults && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="mb-8 md:mb-12"
-        >
-          <TeamPerformanceComparison
-            homeTeam={homeTeam}
-            awayTeam={awayTeam}
-          />
-        </motion.div>
-      )}
+
 
       {/* Team Comparison Skeleton */}
       {homeTeam.name && awayTeam.name && isLoading && (
