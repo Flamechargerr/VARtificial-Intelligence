@@ -1,8 +1,37 @@
 
 """
-Base Football Predictor Class
------------------------------
-Core predictor class that manages multiple ML models for football prediction.
+Football Match Predictor - Core ML Module
+==========================================
+
+This module implements the main predictor class that orchestrates multiple
+machine learning classifiers for football match outcome prediction.
+
+Models Used:
+    1. Gaussian Naive Bayes
+       - Assumes feature independence
+       - Fast training and inference
+       - Provides probabilistic interpretations
+       
+    2. Random Forest Classifier
+       - Ensemble of decision trees
+       - Handles non-linear relationships
+       - Provides feature importance rankings
+       
+    3. Logistic Regression
+       - Linear classification with L2 regularization
+       - Well-calibrated probability estimates
+       - Handles class imbalance via balanced weights
+
+Architecture:
+    Input -> Feature Engineering -> StandardScaler -> Model Ensemble -> Prediction
+
+Performance Expectations:
+    - Football prediction is inherently difficult (baseline ~33%)
+    - Realistic accuracy: 55-70% depending on feature quality
+    - Higher accuracy claims should be viewed skeptically
+
+Author: VARtificial Intelligence Team
+License: MIT
 """
 
 import numpy as np
@@ -11,8 +40,27 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
+
 class FootballPredictor:
-    """Main class for football match prediction"""
+    """
+    Multi-model ensemble predictor for football match outcomes.
+    
+    This class manages training, evaluation, and inference for multiple
+    classification models, combining their predictions for robust forecasting.
+    
+    Attributes:
+        naive_bayes: GaussianNB classifier instance
+        random_forest: RandomForestClassifier instance  
+        logistic_regression: LogisticRegression instance
+        scaler: StandardScaler for feature normalization
+        is_trained: Boolean indicating training status
+        training_iterations: Counter for retraining cycles
+    
+    Example:
+        >>> predictor = FootballPredictor()
+        >>> predictor.train(match_data)
+        >>> predictions = predictor.predict(features)
+    """
     
     def __init__(self):
         # Initialize models with optimized hyperparameters
