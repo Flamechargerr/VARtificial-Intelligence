@@ -87,18 +87,18 @@ const Index = () => {
     }
 
     setIsLoading(true);
-    
+
     try {
       const mlPredictions = await mlService.predictMatch(homeTeam, awayTeam);
       setPredictions(mlPredictions);
       setShowResults(true);
-      
+
       // Save to match history
       if (mlPredictions.length > 0) {
-        const bestPrediction = mlPredictions.reduce((prev, current) => 
+        const bestPrediction = mlPredictions.reduce((prev, current) =>
           (prev.confidence > current.confidence) ? prev : current
         );
-        
+
         matchHistoryService.saveMatch({
           homeTeam: homeTeam.name,
           awayTeam: awayTeam.name,
@@ -108,10 +108,10 @@ const Index = () => {
           confidence: bestPrediction.confidence
         });
       }
-      
+
       setTimeout(() => {
-        document.getElementById("results")?.scrollIntoView({ 
-          behavior: "smooth", 
+        document.getElementById("results")?.scrollIntoView({
+          behavior: "smooth",
           block: "start"
         });
       }, 100);
@@ -146,7 +146,7 @@ const Index = () => {
       onToggleView={() => setShowAdvancedView(!showAdvancedView)}
     >
       {/* Hero Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -159,13 +159,13 @@ const Index = () => {
           Football Match Predictor
         </h1>
         <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl md:max-w-2xl mx-auto px-4">
-          Enter match statistics to predict the final result with advanced machine learning models. 
+          Enter match statistics to predict the final result with advanced machine learning models.
           Our system analyzes team performance, player data, and historical patterns to provide accurate predictions.
         </p>
       </motion.div>
 
       {/* Stats Overview */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
@@ -177,12 +177,12 @@ const Index = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 mr-1.5 md:mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clipRule="evenodd" />
               </svg>
-              Models
+              Ensemble Models
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl md:text-3xl font-bold text-blue-700 dark:text-blue-300">3</div>
-            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">ML Algorithms</p>
+            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">NB, RF, LogReg</p>
           </CardContent>
         </Card>
 
@@ -196,8 +196,8 @@ const Index = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-300">89%</div>
-            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">Highest Model</p>
+            <div className="text-2xl md:text-3xl font-bold text-green-700 dark:text-green-300">68%</div>
+            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">5-Fold CV (RF)</p>
           </CardContent>
         </Card>
 
@@ -207,12 +207,12 @@ const Index = () => {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 md:h-5 md:w-5 mr-1.5 md:mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l-1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
               </svg>
-              Data Points
+              Training Data
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl md:text-3xl font-bold text-purple-700 dark:text-purple-300">10K+</div>
-            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">Matches Analyzed</p>
+            <div className="text-2xl md:text-3xl font-bold text-purple-700 dark:text-purple-300">95</div>
+            <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400">PL 22-23 Matches</p>
           </CardContent>
         </Card>
       </motion.div>
@@ -273,7 +273,7 @@ const Index = () => {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="mb-8 md:mb-12"
         >
-          <WeatherImpact 
+          <WeatherImpact
             location={getLocationForTeam(homeTeam.name)}
             homeTeam={homeTeam.name}
             awayTeam={awayTeam.name}
@@ -289,9 +289,9 @@ const Index = () => {
           transition={{ delay: 0.45, duration: 0.5 }}
           className="mb-8 md:mb-12"
         >
-          <HeadToHeadStats 
-            homeTeam={homeTeam.name} 
-            awayTeam={awayTeam.name} 
+          <HeadToHeadStats
+            homeTeam={homeTeam.name}
+            awayTeam={awayTeam.name}
           />
         </motion.div>
       )}
@@ -337,8 +337,8 @@ const Index = () => {
           transition={{ delay: 0.55, duration: 0.5 }}
           className="mb-8 md:mb-12"
         >
-          <TeamRankingVisualization 
-            selectedTeam={homeTeam.name} 
+          <TeamRankingVisualization
+            selectedTeam={homeTeam.name}
             showTopTeams={8}
           />
         </motion.div>
@@ -415,7 +415,7 @@ const Index = () => {
         >
           {/* Prediction Accuracy Statistics */}
           <PredictionAccuracyStats />
-          
+
           {/* Prediction Results */}
           <PredictionResults
             predictions={predictions}
