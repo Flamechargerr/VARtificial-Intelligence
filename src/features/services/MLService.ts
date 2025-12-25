@@ -7,12 +7,13 @@ import { MatchPrediction, Team, ModelPerformance } from '@/shared/utils/types';
  * Falls back to local heuristics if backend is unavailable.
  */
 
-// Backend API URL - update this when you deploy
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+// Backend API URL - uses environment variable or default
+const API_URL = import.meta.env.VITE_API_URL || 'https://vartificial-intelligence.onrender.com';
 
 class MLService {
   private isBackendAvailable = false;
   private modelPerformance: ModelPerformance[] = [];
+  private backendChecked = false;
 
   // Default performance (used as fallback)
   private readonly DEFAULT_PERFORMANCE: ModelPerformance[] = [
@@ -22,31 +23,43 @@ class MLService {
   ];
 
   constructor() {
-    this.checkBackendHealth();
+    console.log('MLService initialized. Backend URL:', API_URL);
   }
 
   /**
    * Check if the Python backend is available
    */
-  private async checkBackendHealth(): Promise<void> {
+  private async checkBackendHealth(): Promise<boolean> {
+    if (this.backendChecked) {
+      return this.isBackendAvailable;
+    }
+
     try {
+      console.log('Checking backend health at:', `${API_URL}/api/health`);
       const response = await fetch(`${API_URL}/api/health`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(10000) // 10 second timeout
       });
 
       if (response.ok) {
         const data = await response.json();
         this.isBackendAvailable = data.status === 'healthy';
+        this.backendChecked = true;
         console.log('Backend health check:', data);
 
         // Fetch model performance from backend
-        await this.fetchModelPerformance();
+        if (this.isBackendAvailable) {
+          await this.fetchModelPerformance();
+        }
+        return this.isBackendAvailable;
       }
     } catch (error) {
-      console.log('Backend not available, using fallback predictions');
+      console.log('Backend not available:', error);
       this.isBackendAvailable = false;
+      this.backendChecked = true;
     }
+    return false;
   }
 
   /**
@@ -56,15 +69,17 @@ class MLService {
     try {
       const response = await fetch(`${API_URL}/api/models`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(10000)
       });
 
       if (response.ok) {
         const data = await response.json();
         this.modelPerformance = data.models;
+        console.log('Model performance fetched:', data.models);
       }
     } catch (error) {
-      console.log('Could not fetch model performance');
+      console.log('Could not fetch model performance:', error);
     }
   }
 
@@ -82,12 +97,17 @@ class MLService {
    * Make prediction using the Python backend
    */
   public async predictMatch(homeTeam: Team, awayTeam: Team): Promise<MatchPrediction[]> {
-    // Try backend first
+    // Check backend availability first
+    await this.checkBackendHealth();
+
+    // Try backend
     if (this.isBackendAvailable) {
       try {
+        console.log('Making prediction via backend...');
         const response = await fetch(`${API_URL}/api/predict`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          signal: AbortSignal.timeout(15000), // 15 second timeout for cold start
           body: JSON.stringify({
             home_goals: parseInt(homeTeam.goals) || 0,
             home_shots: parseInt(homeTeam.shots) || 0,
@@ -102,15 +122,18 @@ class MLService {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Backend prediction:', data);
+          console.log('Backend prediction received:', data);
           return data.predictions;
+        } else {
+          console.log('Backend returned error:', response.status);
         }
       } catch (error) {
-        console.log('Backend prediction failed, using fallback');
+        console.log('Backend prediction failed:', error);
       }
     }
 
-    // Fallback to local heuristic
+    // Fallback to local calculation
+    console.log('Using fallback prediction...');
     return this.getFallbackPredictions(homeTeam, awayTeam);
   }
 
@@ -128,56 +151,62 @@ class MLService {
     const homeRedCards = parseInt(homeTeam.redCards) || 0;
     const awayRedCards = parseInt(awayTeam.redCards) || 0;
 
-    // Calculate score difference
+    // Goal difference is the PRIMARY factor
     const goalDiff = homeGoals - awayGoals;
-    const shotDiff = homeShots - awayShots;
-    const redCardDiff = awayRedCards - homeRedCards;
 
-    // Weighted score
-    const homeScore = (homeGoals * 3) + (homeShots * 0.5) + (homeShotsOnTarget * 1) - (homeRedCards * 2);
-    const awayScore = (awayGoals * 3) + (awayShots * 0.5) + (awayShotsOnTarget * 1) - (awayRedCards * 2);
-    const scoreDiff = homeScore - awayScore;
+    // Supporting factors (less important than goals)
+    const shotDiff = (homeShots - awayShots) * 0.3;
+    const sotDiff = (homeShotsOnTarget - awayShotsOnTarget) * 0.5;
+    const redCardImpact = (awayRedCards - homeRedCards) * 1.5;
 
-    // Determine outcome
+    // Combined score with goals being most important
+    const scoreDiff = (goalDiff * 5) + shotDiff + sotDiff + redCardImpact;
+
+    // Determine outcome based on GOAL difference first
     let outcome: 'Home Win' | 'Draw' | 'Away Win';
     let baseConfidence: number;
 
-    if (scoreDiff > 3) {
+    if (goalDiff > 0) {
+      // Home team has more goals - they're winning
       outcome = 'Home Win';
-      baseConfidence = Math.min(85, 60 + scoreDiff * 2);
-    } else if (scoreDiff < -3) {
+      baseConfidence = Math.min(90, 60 + goalDiff * 8);
+    } else if (goalDiff < 0) {
+      // Away team has more goals - they're winning
       outcome = 'Away Win';
-      baseConfidence = Math.min(85, 60 + Math.abs(scoreDiff) * 2);
-    } else if (Math.abs(scoreDiff) <= 1) {
-      outcome = 'Draw';
-      baseConfidence = 55 + (5 - Math.abs(scoreDiff));
-    } else if (scoreDiff > 0) {
-      outcome = 'Home Win';
-      baseConfidence = 55 + scoreDiff * 3;
+      baseConfidence = Math.min(90, 60 + Math.abs(goalDiff) * 8);
     } else {
-      outcome = 'Away Win';
-      baseConfidence = 55 + Math.abs(scoreDiff) * 3;
+      // Tied on goals - look at other stats
+      if (scoreDiff > 2) {
+        outcome = 'Home Win';
+        baseConfidence = 55 + Math.min(15, scoreDiff);
+      } else if (scoreDiff < -2) {
+        outcome = 'Away Win';
+        baseConfidence = 55 + Math.min(15, Math.abs(scoreDiff));
+      } else {
+        outcome = 'Draw';
+        baseConfidence = 55;
+      }
     }
 
-    console.log(`Fallback prediction: ${outcome} (score diff: ${scoreDiff.toFixed(1)})`);
+    console.log(`Fallback: ${outcome} (goals: ${homeGoals}-${awayGoals}, score: ${scoreDiff.toFixed(1)})`);
 
     return [
       {
         modelName: 'Naive Bayes',
         outcome,
-        confidence: baseConfidence - 4,
+        confidence: Math.max(50, baseConfidence - 4),
         modelAccuracy: 0.62
       },
       {
         modelName: 'Random Forest',
         outcome,
-        confidence: baseConfidence,
+        confidence: Math.max(50, baseConfidence),
         modelAccuracy: 0.68
       },
       {
         modelName: 'Logistic Regression',
         outcome,
-        confidence: baseConfidence - 2,
+        confidence: Math.max(50, baseConfidence - 2),
         modelAccuracy: 0.65
       }
     ];

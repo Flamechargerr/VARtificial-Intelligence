@@ -58,7 +58,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <div className="container max-w-5xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-slate-600 dark:text-slate-400">
-              <strong>Tech Stack:</strong> React, TypeScript, scikit-learn, Pyodide
+              <strong>Tech Stack:</strong> React, TypeScript, Flask, scikit-learn
             </div>
             <div className="text-sm text-slate-500 dark:text-slate-400">
               © {new Date().getFullYear()} VARtificial Intelligence
