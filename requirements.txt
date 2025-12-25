@@ -1,0 +1,27 @@
+# VARtificial Intelligence - Python Dependencies
+# These packages are used for ML model development and experimentation
+# Note: In the browser, models run via Pyodide (WebAssembly Python)
+
+# Core Scientific Computing
+numpy>=1.21.0
+pandas>=1.3.0
+
+# Machine Learning
+scikit-learn>=1.0.0
+
+# Data Visualization (for notebooks)
+matplotlib>=3.4.0
+seaborn>=0.11.0
+
+# Jupyter Notebooks
+jupyter>=1.0.0
+jupyterlab>=3.0.0
+
+# Development Tools
+black>=22.0.0
+isort>=5.0.0
+pylint>=2.12.0
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=3.0.0
