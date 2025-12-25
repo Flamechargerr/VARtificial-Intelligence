@@ -1,11 +1,29 @@
 
 """
-Advanced Feature Engineering for Football Match Prediction
----------------------------------------------------------
-This module handles feature engineering for the football prediction models.
+Feature Engineering Module for Football Match Prediction
+=========================================================
+
+This module implements feature engineering techniques for transforming
+raw match statistics into meaningful predictive features.
+
+Key Transformations:
+    1. Difference features (goal diff, shot diff, etc.)
+    2. Efficiency metrics (shot efficiency, scoring efficiency)
+    3. Red card penalty factors
+    4. Feature normalization (StandardScaler equivalent)
+    5. Polynomial feature expansion
+    6. Data augmentation via noise injection
+
+References:
+    - Hubáček, O., et al. (2019). Exploiting sports-betting market using ML.
+    - Baboota, R., & Kaur, H. (2019). Predictive analysis of football results.
+
+Author: VARtificial Intelligence Team
+License: MIT
 """
 
 import numpy as np
+
 
 def engineer_match_features(X):
     """Create sophisticated derived features from raw match statistics"""
