@@ -1,8 +1,8 @@
 # VARtificial Intelligence - Python Backend Dependencies
-# Using versions compatible with Python 3.11
+# Using scikit-learn 1.5+ which has pre-built wheels for Python 3.13
 
 flask==3.0.0
 flask-cors==4.0.0
-numpy==1.26.2
-scikit-learn==1.3.2
+numpy>=1.26.0
+scikit-learn>=1.5.0
 gunicorn==21.2.0
