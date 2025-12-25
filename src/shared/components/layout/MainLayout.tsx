@@ -36,7 +36,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-gray-200 bg-opacity-20"></div>
         </div>
-        
+
         <div className="container max-w-7xl mx-auto px-4 relative z-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-3 md:space-x-4">
@@ -50,19 +50,19 @@ const MainLayout: React.FC<MainLayoutProps> = ({
                 </p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-2 md:gap-3">
               <ThemeToggle />
               {trainingIteration > 0 && (
-                <TrainingCycleIndicator 
-                  iteration={trainingIteration} 
+                <TrainingCycleIndicator
+                  iteration={trainingIteration}
                   progress={trainingProgress}
                   onClick={() => setShowTrainingInfo(!showTrainingInfo)}
                 />
               )}
               {onToggleView && (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={onToggleView}
                   className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-105 text-xs md:text-sm py-1.5 px-2 md:py-2 md:px-4"
                 >
@@ -82,12 +82,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({
       <main className="container max-w-7xl mx-auto px-4 py-4 md:py-8 relative z-10">
         {showTrainingInfo && trainingIteration > 0 && (
           <div className="mb-6 md:mb-8 animate-fade-down">
-            <TrainingExplanation 
+            <TrainingExplanation
               trainingIteration={trainingIteration}
               modelPerformance={[
-                { name: "Naive Bayes", accuracy: 0.82 + (0.001 * trainingIteration) },
-                { name: "Random Forest", accuracy: 0.89 + (0.0008 * trainingIteration) },
-                { name: "Logistic Regression", accuracy: 0.87 + (0.0009 * trainingIteration) }
+                { name: "Naive Bayes", accuracy: 0.62 },
+                { name: "Random Forest", accuracy: 0.68 },
+                { name: "Logistic Regression", accuracy: 0.65 }
               ]}
             />
           </div>
@@ -109,14 +109,14 @@ const MainLayout: React.FC<MainLayoutProps> = ({
                 </p>
               </div>
             </div>
-            
+
             <div className="flex flex-col items-center md:items-end">
               <p className="text-gray-400 text-xs md:text-sm">
                 © {new Date().getFullYear()} VARtificial Intelligence
               </p>
               <div className="flex space-x-4 mt-1">
-                <span className="text-xs text-gray-500 hidden sm:block">ML Models Training</span>
-                <span className="text-xs text-green-400">● Live</span>
+                <span className="text-xs text-gray-500 hidden sm:block">Ensemble Models</span>
+                <span className="text-xs text-green-400">● Ready</span>
               </div>
             </div>
           </div>
