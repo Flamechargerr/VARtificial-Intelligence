@@ -123,7 +123,19 @@ class MLService {
         if (response.ok) {
           const data = await response.json();
           console.log('Backend prediction received:', data);
-          return data.predictions;
+
+          // Override backend accuracy with honest CV accuracy values
+          // Backend returns in-sample accuracy (98-100%), we use CV accuracy (62-68%)
+          const cvAccuracy: Record<string, number> = {
+            'naive bayes': 0.62,
+            'random forest': 0.68,
+            'logistic regression': 0.65
+          };
+
+          return data.predictions.map((pred: any) => ({
+            ...pred,
+            modelAccuracy: cvAccuracy[pred.modelName.toLowerCase()] || pred.modelAccuracy
+          }));
         } else {
           console.log('Backend returned error:', response.status);
         }

@@ -19,8 +19,6 @@ import TeamComparison from "@/shared/components/TeamComparison";
 import TeamInputSkeleton from "@/shared/components/TeamInputSkeleton";
 import PredictionResultsSkeleton from "@/shared/components/PredictionResultsSkeleton";
 import TeamComparisonSkeleton from "@/shared/components/TeamComparisonSkeleton";
-import PredictionAccuracyStats from "@/shared/components/PredictionAccuracyStats";
-import TeamMomentum from "@/shared/components/TeamMomentum";
 import TeamRankingVisualization from "@/shared/components/TeamRankingVisualization";
 
 const Index = () => {
@@ -249,20 +247,6 @@ const Index = () => {
         </motion.div>
       )}
 
-      {/* Team Momentum */}
-      {homeTeam.name && awayTeam.name && !isLoading && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 md:mb-12"
-        >
-          <TeamMomentum teamName={homeTeam.name} />
-          <TeamMomentum teamName={awayTeam.name} />
-        </motion.div>
-      )}
-
-
 
       {/* Team Comparison */}
       {homeTeam.name && awayTeam.name && !isLoading && (
@@ -368,9 +352,6 @@ const Index = () => {
           id="results"
           className="space-y-8 md:space-y-12"
         >
-          {/* Prediction Accuracy Statistics */}
-          <PredictionAccuracyStats />
-
           {/* Prediction Results */}
           <PredictionResults
             predictions={predictions}
