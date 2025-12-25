@@ -1,8 +1,24 @@
 
 """
-Training Utilities for Football Models
--------------------------------------
-Helper functions for training and evaluating football prediction models.
+Training Utilities for Football Prediction Models
+==================================================
+
+This module provides utility functions for preparing training data and
+evaluating model performance in the football match prediction pipeline.
+
+Functions:
+    - prepare_data: Data splitting, feature engineering, and scaling
+    - train_and_evaluate_models: Cross-training and metric calculation
+
+Training Pipeline:
+    1. Random permutation-based train/test split (80/20)
+    2. Feature engineering applied to both sets
+    3. Data augmentation for small datasets (<100 samples)
+    4. StandardScaler normalization
+    5. Model training and evaluation
+
+Author: VARtificial Intelligence Team
+License: MIT
 """
 
 import numpy as np
