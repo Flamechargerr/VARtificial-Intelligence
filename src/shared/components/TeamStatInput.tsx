@@ -4,6 +4,7 @@ import { Label } from "@/shared/components/ui/label";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Badge } from "@/shared/components/ui/badge";
+import { Target, Crosshair, CheckCircle, AlertTriangle } from "lucide-react";
 import SearchableTeamSelect from "./SearchableTeamSelect";
 
 interface TeamStatInputProps {
@@ -38,8 +39,8 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
   className = "",
 }) => {
   const isHome = teamType === "home";
-  const bgGradient = isHome 
-    ? "bg-gradient-to-br from-blue-50 to-blue-50/70" 
+  const bgGradient = isHome
+    ? "bg-gradient-to-br from-blue-50 to-blue-50/70"
     : "bg-gradient-to-br from-red-50 to-red-50/70";
   const borderColor = isHome ? "border-home-light" : "border-away-light";
   const textColor = isHome ? "text-home-dark" : "text-away-dark";
@@ -47,7 +48,7 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
   const shadowColor = isHome ? "shadow-blue-100/50" : "shadow-red-100/50";
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
@@ -87,8 +88,8 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                ⚽
+              <div className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <Target className="w-3.5 h-3.5" />
               </div>
             </div>
           </div>
@@ -106,8 +107,8 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                🎯
+              <div className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <Crosshair className="w-3.5 h-3.5" />
               </div>
             </div>
           </div>
@@ -125,8 +126,8 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                ✅
+              <div className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400">
+                <CheckCircle className="w-3.5 h-3.5" />
               </div>
             </div>
           </div>
@@ -144,8 +145,8 @@ const TeamStatInput: React.FC<TeamStatInputProps> = ({
                 className="focused-input bg-white/80 backdrop-blur-sm pl-7 md:pl-8 text-sm md:text-base"
                 placeholder="0"
               />
-              <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
-                🟥
+              <div className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-red-400">
+                <AlertTriangle className="w-3.5 h-3.5" />
               </div>
             </div>
           </div>
