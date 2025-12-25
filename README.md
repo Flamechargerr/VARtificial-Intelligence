@@ -233,23 +233,27 @@ const prediction = await mlService.predictMatch(homeTeam, awayTeam);
 
 ```
 VARtificial-Intelligence/
+├── .github/                     # GitHub templates and workflows
+├── notebooks/                   # Jupyter notebooks for analysis
+├── public/                      # Static assets (images, icons)
 ├── src/
 │   ├── core/                    # Application configuration
 │   ├── features/
-│   │   ├── python/              # ML model implementations
+│   │   ├── python/              # Python ML implementations
 │   │   │   ├── models/          # Classifier definitions
-│   │   │   ├── visualization/   # Plotting utilities
-│   │   │   ├── feature_engineering.py
-│   │   │   └── model_evaluation.py
+│   │   │   └── visualization/   # Plotting utilities
 │   │   └── services/            # TypeScript ML service layer
 │   ├── shared/
 │   │   ├── components/          # React UI components
 │   │   ├── pages/               # Application views
 │   │   └── utils/               # Utilities and data
 │   └── lib/                     # Third-party integrations
-├── docs/                        # Documentation and assets
-├── public/                      # Static assets
-└── notebooks/                   # Jupyter notebooks (analysis)
+├── CHANGELOG.md                 # Version history
+├── CONTRIBUTING.md              # Contribution guidelines
+├── LICENSE                      # MIT License
+├── README.md                    # Project documentation
+├── requirements.txt             # Python dependencies
+└── package.json                 # Node.js dependencies
 ```
 
 ## Technical Stack
