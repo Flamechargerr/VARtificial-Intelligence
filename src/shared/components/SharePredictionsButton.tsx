@@ -22,21 +22,22 @@ const SharePredictionsButton: React.FC<SharePredictionsButtonProps> = ({
   predictions
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   // Find the best prediction (highest confidence)
-  const bestPrediction = predictions.reduce((prev, current) => 
+  const bestPrediction = predictions.reduce((prev, current) =>
     (prev.confidence > current.confidence) ? prev : current
   );
 
   // Generate share text
   const generateShareText = () => {
-    return `⚽ VARtificial Intelligence Prediction ⚽
+    return `VARtificial Intelligence - Match Prediction
 
 ${homeTeam} vs ${awayTeam}
 Prediction: ${bestPrediction.outcome}
 Confidence: ${bestPrediction.confidence.toFixed(1)}%
+Model: ${bestPrediction.modelName}
 
-Check out the full analysis at VARtificial Intelligence!`;
+Powered by ML ensemble (Naive Bayes, Random Forest, Logistic Regression)`;
   };
 
   // Generate share URL
