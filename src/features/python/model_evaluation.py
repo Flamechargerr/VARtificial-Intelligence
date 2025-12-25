@@ -1,8 +1,27 @@
 
 """
 Model Evaluation Module for Football Prediction
-----------------------------------------------
-This module handles model evaluation and validation metrics.
+================================================
+
+This module provides comprehensive evaluation utilities for assessing
+machine learning model performance on football match prediction tasks.
+
+Evaluation Metrics:
+    - Accuracy: Overall correctness of predictions
+    - Precision: Positive predictive value per class
+    - Recall: True positive rate per class
+    - F1-Score: Harmonic mean of precision and recall
+
+Cross-Validation:
+    Uses stratified K-fold cross-validation to ensure robust performance
+    estimates while maintaining class distribution in each fold.
+
+Visualization:
+    - Confusion matrices for error analysis
+    - Learning curves for bias-variance diagnosis
+
+Author: VARtificial Intelligence Team
+License: MIT
 """
 
 import numpy as np
