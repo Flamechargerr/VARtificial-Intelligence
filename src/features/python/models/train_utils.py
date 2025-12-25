@@ -58,26 +58,18 @@ def train_and_evaluate_models(X_train, y_train, X_test, y_test, naive_bayes, ran
         # Make predictions
         preds = model.predict(X_test)
         
-        # Calculate metrics
+        # Calculate actual metrics without artificial inflation
+        # Football prediction is inherently difficult - honest reporting is important
         accuracy = accuracy_score(y_test, preds)
         precision = precision_score(y_test, preds, average='weighted', zero_division=0)
         
-        # Add a small improvement for each iteration to simulate model improvement
-        # Starting from ~80% and increasing gradually to avoid overfitting
-        base_accuracy = min(0.82, accuracy)
-        base_precision = min(0.84, precision)
-        
-        # Calculate improvement factor with diminishing returns to prevent overfitting
-        improvement_factor = min(0.15, 0.02 * np.log(1 + training_iterations))
-        
-        # Apply improvement with an upper limit to prevent overfitting
-        improved_accuracy = min(0.92, base_accuracy * (1 + improvement_factor))
-        improved_precision = min(0.94, base_precision * (1 + improvement_factor))
-        
+        # Report true performance metrics
+        # Note: Expected accuracy for football prediction is typically 50-70%
+        # due to the inherent unpredictability of sports outcomes
         results.append({
             "name": name,
-            "accuracy": improved_accuracy,
-            "precision": improved_precision
+            "accuracy": float(accuracy),
+            "precision": float(precision)
         })
     
     return results
