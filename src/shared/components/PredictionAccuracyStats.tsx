@@ -27,7 +27,7 @@ const PredictionAccuracyStats: React.FC = () => {
   useEffect(() => {
     const historyData = matchHistoryService.getHistory();
     setHistory(historyData);
-    
+
     if (historyData.length > 0) {
       calculateAccuracyStats(historyData);
     }
@@ -44,7 +44,7 @@ const PredictionAccuracyStats: React.FC = () => {
 
     const totalPredictions = filteredData.length;
     let correctPredictions = 0;
-    
+
     // Confidence-based accuracy tracking
     const confidenceStats = {
       high: { correct: 0, total: 0 },
@@ -57,7 +57,7 @@ const PredictionAccuracyStats: React.FC = () => {
         // Check if prediction was correct
         if (match.prediction === match.actualResult) {
           correctPredictions++;
-          
+
           // Update confidence-based stats
           if (match.confidence >= 80) {
             confidenceStats.high.correct++;
@@ -84,21 +84,22 @@ const PredictionAccuracyStats: React.FC = () => {
 
     // Calculate rates
     const accuracyRate = totalPredictions > 0 ? (correctPredictions / totalPredictions) * 100 : 0;
-    
-    const highConfidenceRate = confidenceStats.high.total > 0 
-      ? (confidenceStats.high.correct / confidenceStats.high.total) * 100 
-      : 0;
-      
-    const mediumConfidenceRate = confidenceStats.medium.total > 0 
-      ? (confidenceStats.medium.correct / confidenceStats.medium.total) * 100 
-      : 0;
-      
-    const lowConfidenceRate = confidenceStats.low.total > 0 
-      ? (confidenceStats.low.correct / confidenceStats.low.total) * 100 
+
+    const highConfidenceRate = confidenceStats.high.total > 0
+      ? (confidenceStats.high.correct / confidenceStats.high.total) * 100
       : 0;
 
-    // Estimate model accuracy based on recent performance
-    const modelAccuracy = Math.min(95, 75 + (accuracyRate * 0.2));
+    const mediumConfidenceRate = confidenceStats.medium.total > 0
+      ? (confidenceStats.medium.correct / confidenceStats.medium.total) * 100
+      : 0;
+
+    const lowConfidenceRate = confidenceStats.low.total > 0
+      ? (confidenceStats.low.correct / confidenceStats.low.total) * 100
+      : 0;
+
+    // Use actual model accuracy instead of inflated estimate
+    // Random Forest (best model) has 68% accuracy from 5-fold CV
+    const modelAccuracy = 68;
 
     setAccuracyStats({
       totalPredictions,
@@ -130,7 +131,7 @@ const PredictionAccuracyStats: React.FC = () => {
       <div className="space-y-6">
         {/* Streak Tracker */}
         <PredictionStreakTracker />
-        
+
         {/* Accuracy Stats */}
         <Card className="w-full">
           <CardHeader>
@@ -153,7 +154,7 @@ const PredictionAccuracyStats: React.FC = () => {
     <div className="space-y-6">
       {/* Streak Tracker */}
       <PredictionStreakTracker />
-      
+
       {/* Accuracy Stats */}
       <Card className="w-full">
         <CardHeader>
@@ -163,21 +164,21 @@ const PredictionAccuracyStats: React.FC = () => {
               Prediction Accuracy Statistics
             </CardTitle>
             <div className="flex space-x-2">
-              <Badge 
+              <Badge
                 variant={timeRange === "all" ? "default" : "secondary"}
                 className="cursor-pointer"
                 onClick={() => setTimeRange("all")}
               >
                 All Time
               </Badge>
-              <Badge 
+              <Badge
                 variant={timeRange === "last10" ? "default" : "secondary"}
                 className="cursor-pointer"
                 onClick={() => setTimeRange("last10")}
               >
                 Last 10
               </Badge>
-              <Badge 
+              <Badge
                 variant={timeRange === "last30" ? "default" : "secondary"}
                 className="cursor-pointer"
                 onClick={() => setTimeRange("last30")}
@@ -205,7 +206,7 @@ const PredictionAccuracyStats: React.FC = () => {
                   {accuracyStats.totalPredictions}
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -220,7 +221,7 @@ const PredictionAccuracyStats: React.FC = () => {
                   {accuracyStats.correctPredictions}
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -236,7 +237,7 @@ const PredictionAccuracyStats: React.FC = () => {
                 </p>
               </motion.div>
             </div>
-            
+
             {/* Confidence-Based Accuracy */}
             <div>
               <h3 className="text-lg font-semibold mb-3">Confidence-Based Accuracy</h3>
@@ -254,13 +255,13 @@ const PredictionAccuracyStats: React.FC = () => {
                       {accuracyStats.confidenceAccuracy.high.rate.toFixed(1)}%
                     </span>
                   </div>
-                  <Progress 
-                    value={accuracyStats.confidenceAccuracy.high.rate} 
-                    className="h-2" 
+                  <Progress
+                    value={accuracyStats.confidenceAccuracy.high.rate}
+                    className="h-2"
                     indicatorColor="bg-green-500"
                   />
                 </div>
-                
+
                 {/* Medium Confidence */}
                 <div>
                   <div className="flex justify-between items-center mb-1">
@@ -274,13 +275,13 @@ const PredictionAccuracyStats: React.FC = () => {
                       {accuracyStats.confidenceAccuracy.medium.rate.toFixed(1)}%
                     </span>
                   </div>
-                  <Progress 
-                    value={accuracyStats.confidenceAccuracy.medium.rate} 
-                    className="h-2" 
+                  <Progress
+                    value={accuracyStats.confidenceAccuracy.medium.rate}
+                    className="h-2"
                     indicatorColor="bg-yellow-500"
                   />
                 </div>
-                
+
                 {/* Low Confidence */}
                 <div>
                   <div className="flex justify-between items-center mb-1">
@@ -294,15 +295,15 @@ const PredictionAccuracyStats: React.FC = () => {
                       {accuracyStats.confidenceAccuracy.low.rate.toFixed(1)}%
                     </span>
                   </div>
-                  <Progress 
-                    value={accuracyStats.confidenceAccuracy.low.rate} 
-                    className="h-2" 
+                  <Progress
+                    value={accuracyStats.confidenceAccuracy.low.rate}
+                    className="h-2"
                     indicatorColor="bg-red-500"
                   />
                 </div>
               </div>
             </div>
-            
+
             {/* Model Performance */}
             <div className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg">
               <div className="flex items-center justify-between mb-2">
@@ -321,7 +322,7 @@ const PredictionAccuracyStats: React.FC = () => {
                 Based on your prediction history and current model performance
               </p>
             </div>
-            
+
             {/* Recent Predictions */}
             <div>
               <h3 className="text-lg font-semibold mb-3">Recent Predictions</h3>
@@ -338,7 +339,7 @@ const PredictionAccuracyStats: React.FC = () => {
                       <span className="font-medium">{match.homeTeam}</span> vs <span className="font-medium">{match.awayTeam}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Badge 
+                      <Badge
                         variant={match.actualResult === match.prediction ? "default" : "destructive"}
                         className="text-xs"
                       >
