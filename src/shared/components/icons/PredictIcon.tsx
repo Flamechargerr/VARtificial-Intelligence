@@ -1,6 +1,11 @@
-
 import React from "react";
 
+/**
+ * PredictIcon - Analysis/Brain Icon
+ * 
+ * Professional icon for the prediction button.
+ * Represents data analysis and machine learning.
+ */
 const PredictIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }) => {
   return (
     <svg
@@ -9,15 +14,23 @@ const PredictIcon: React.FC<{ className?: string }> = ({ className = "w-5 h-5" }
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      {/* Chart/Analysis icon */}
       <path
-        d="M12 8V12L15 15"
+        d="M3 3V21H21"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+        d="M7 14L11 10L15 13L21 7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M17 7H21V11"
         stroke="currentColor"
         strokeWidth="2"
         strokeLinecap="round"
