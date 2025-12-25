@@ -13,14 +13,9 @@ import { motion } from "framer-motion";
 import RealTimeMatchButton from "./RealTimeMatchButton";
 import ExportPredictionsButton from "./ExportPredictionsButton";
 import PredictionConfidenceOverview from "./PredictionConfidenceOverview";
-import SharePredictionsButton from "./SharePredictionsButton";
-import ConfidenceCalibration from "./ConfidenceCalibration";
 import PredictionHeatmap from "./PredictionHeatmap";
 import MatchSimulation from "./MatchSimulation";
-import BettingOddsComparison from "./BettingOddsComparison";
-import PredictionExplanation from "./PredictionExplanation";
-import FeedbackDashboard from "./FeedbackDashboard";
-import { Target, Trophy, DollarSign, Lightbulb } from "lucide-react";
+import { Target, Trophy } from "lucide-react";
 
 interface PredictionResultsProps {
   predictions: MatchPrediction[];
@@ -52,7 +47,7 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
   }
 
   // Find the prediction with highest confidence
-  const bestPrediction = predictions.reduce((prev, current) => 
+  const bestPrediction = predictions.reduce((prev, current) =>
     (prev.confidence > current.confidence) ? prev : current
   );
 
@@ -75,22 +70,17 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
               </p>
             </div>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row items-center gap-2 md:gap-3">
             <Badge className="text-base md:text-lg py-1.5 px-3 md:py-2 md:px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300">
               Best Prediction: {bestPrediction.modelName}
             </Badge>
             <div className="flex gap-1.5 md:gap-2">
               <RealTimeMatchButton homeTeam={homeTeam.name} awayTeam={awayTeam.name} />
-              <ExportPredictionsButton 
-                homeTeam={homeTeam.name} 
-                awayTeam={awayTeam.name} 
-                predictions={predictions} 
-              />
-              <SharePredictionsButton 
-                homeTeam={homeTeam.name} 
-                awayTeam={awayTeam.name} 
-                predictions={predictions} 
+              <ExportPredictionsButton
+                homeTeam={homeTeam.name}
+                awayTeam={awayTeam.name}
+                predictions={predictions}
               />
             </div>
           </div>
@@ -104,7 +94,7 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-200">Model Predictions</h3>
             </div>
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {predictions.map((prediction, index) => (
                 <motion.div
@@ -136,42 +126,17 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
           <div className="lg:col-span-3">
             <Card className="border-0 shadow-xl bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-900/20 dark:to-purple-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
               <CardContent className="p-4 md:p-6">
-                <PredictionConfidenceOverview 
-                  predictions={predictions} 
-                  homeTeam={homeTeam.name} 
-                  awayTeam={awayTeam.name} 
+                <PredictionConfidenceOverview
+                  predictions={predictions}
+                  homeTeam={homeTeam.name}
+                  awayTeam={awayTeam.name}
                 />
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Confidence Calibration Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
-          <div className="lg:col-span-3">
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50/50 to-teal-50/50 dark:from-green-900/20 dark:to-teal-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-              <CardHeader className="pb-3 md:pb-4">
-                <CardTitle className="flex items-center text-green-900 dark:text-green-100 text-lg md:text-xl">
-                  <div className="p-1.5 md:p-2 bg-green-100 dark:bg-green-900/50 rounded-full mr-2 md:mr-3">
-                    <PredictIcon className="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400" />
-                  </div>
-                  Confidence Calibration
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {predictions.map((prediction, index) => (
-                    <ConfidenceCalibration
-                      key={index}
-                      modelId={prediction.modelName.toLowerCase().replace(/\s+/g, '_')}
-                      rawConfidence={prediction.confidence}
-                    />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+
 
         {/* Prediction Heatmap Section */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
@@ -235,76 +200,7 @@ const PredictionResults: React.FC<PredictionResultsProps> = ({
           </div>
         </div>
 
-        {/* Betting Odds Comparison Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
-          <div className="lg:col-span-3">
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-900/20 dark:to-emerald-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-              <CardHeader className="pb-3 md:pb-4">
-                <CardTitle className="flex items-center text-green-900 dark:text-green-100 text-lg md:text-xl">
-                  <div className="p-1.5 md:p-2 bg-green-100 dark:bg-green-900/50 rounded-full mr-2 md:mr-3">
-                    <DollarSign className="w-4 h-4 md:w-5 md:h-5 text-green-600 dark:text-green-400" />
-                  </div>
-                  Betting Odds Comparison
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <BettingOddsComparison
-                  homeTeam={homeTeam.name}
-                  awayTeam={awayTeam.name}
-                />
-              </CardContent>
-            </Card>
-          </div>
-        </div>
 
-        {/* Prediction Explanations */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
-          <div className="lg:col-span-3">
-            <Card className="border-0 shadow-xl bg-gradient-to-br from-yellow-50/50 to-amber-50/50 dark:from-yellow-900/20 dark:to-amber-900/20 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-              <CardHeader className="pb-3 md:pb-4">
-                <CardTitle className="flex items-center text-yellow-900 dark:text-yellow-100 text-lg md:text-xl">
-                  <div className="p-1.5 md:p-2 bg-yellow-100 dark:bg-yellow-900/50 rounded-full mr-2 md:mr-3">
-                    <Lightbulb className="w-4 h-4 md:w-5 md:h-5 text-yellow-600 dark:text-yellow-400" />
-                  </div>
-                  Prediction Explanations
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {predictions.map((prediction, index) => (
-                    <PredictionExplanation
-                      key={index}
-                      modelName={prediction.modelName}
-                      outcome={prediction.outcome}
-                      confidence={prediction.confidence}
-                      homeTeamStats={{
-                        name: homeTeam.name,
-                        goals: parseInt(homeTeam.goals) || 0,
-                        shots: parseInt(homeTeam.shots) || 0,
-                        shotsOnTarget: parseInt(homeTeam.shotsOnTarget) || 0,
-                        redCards: parseInt(homeTeam.redCards) || 0
-                      }}
-                      awayTeamStats={{
-                        name: awayTeam.name,
-                        goals: parseInt(awayTeam.goals) || 0,
-                        shots: parseInt(awayTeam.shots) || 0,
-                        shotsOnTarget: parseInt(awayTeam.shotsOnTarget) || 0,
-                        redCards: parseInt(awayTeam.redCards) || 0
-                      }}
-                    />
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Feedback Dashboard */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-10">
-          <div className="lg:col-span-3">
-            <FeedbackDashboard />
-          </div>
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           <motion.div
