@@ -261,3 +261,4 @@
 - [2026-01-08 01:34] feat(ui): add match day prediction dashboard
 - [2026-01-08 03:37] perf(inference): batch prediction optimization
 - [2026-01-08 01:09] style(ui): add football pitch SVG overlay
+- [2026-01-07 19:58] feat(model): implement XGBoost match predictor
