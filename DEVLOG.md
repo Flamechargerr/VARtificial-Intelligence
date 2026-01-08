@@ -920,3 +920,4 @@
 - [2025-11-23 03:00] style: apply consistent code formatting
 - [2025-11-23 04:21] perf: optimize database query plan
 - [2025-11-23 04:23] fix: correct async state race condition
+- [2026-01-08 23:28] fix: prevent memory leak in effect cleanup
