@@ -940,3 +940,4 @@
 - [2026-01-09 00:30] refactor: simplify conditional logic
 - [2026-01-09 03:30] refactor: optimize render pipeline
 - [2026-01-09 00:54] docs: update API documentation
+- [2026-01-09 02:39] fix: prevent memory leak in effect cleanup
