@@ -297,3 +297,4 @@
 - [2026-01-20 01:02] feat(viz): confusion matrix visualization
 - [2026-01-20 01:31] docs(model): document feature importance
 - [2026-01-20 03:10] feat(features): weather impact correlation
+- [2026-01-19 23:05] fix(data): normalize team name variations
