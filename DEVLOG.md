@@ -304,3 +304,4 @@
 - [2026-01-19 20:24] feat(model): implement XGBoost match predictor
 - [2026-01-19 22:33] feat(data): scrape historical EPL match data
 - [2026-01-20 04:03] feat(features): add Elo rating feature engineering
+- [2026-01-20 00:09] feat(features): calculate rolling form average
