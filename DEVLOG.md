@@ -326,3 +326,4 @@
 - [2026-01-26 21:28] feat(features): add Elo rating feature engineering
 - [2026-01-27 03:34] feat(features): calculate rolling form average
 - [2026-01-26 19:58] fix(model): handle missing player injury data
+- [2026-01-27 04:03] feat(viz): add prediction probability gauge
