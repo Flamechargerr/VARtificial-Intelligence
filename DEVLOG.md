@@ -322,3 +322,4 @@
 - [2026-01-26 20:12] perf(inference): batch prediction optimization
 - [2026-01-26 23:15] style(ui): add football pitch SVG overlay
 - [2026-01-26 20:42] feat(model): implement XGBoost match predictor
+- [2026-01-27 03:16] feat(data): scrape historical EPL match data
