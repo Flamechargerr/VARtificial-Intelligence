@@ -339,3 +339,4 @@
 - [2026-01-30 03:08] feat(features): weather impact correlation
 - [2026-01-29 20:24] fix(data): normalize team name variations
 - [2026-01-30 03:35] feat(ui): add match day prediction dashboard
+- [2026-01-30 03:20] perf(inference): batch prediction optimization
