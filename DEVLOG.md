@@ -603,3 +603,4 @@
 - [2025-11-04 21:36] feat: add error boundary handling
 - [2025-11-04 22:06] style: apply consistent code formatting
 - [2025-11-04 21:51] perf: optimize database query plan
+- [2026-02-03 23:11] docs: update API documentation
