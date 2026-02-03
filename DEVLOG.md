@@ -605,3 +605,4 @@
 - [2025-11-04 21:51] perf: optimize database query plan
 - [2026-02-03 23:11] docs: update API documentation
 - [2026-02-03 23:40] fix: prevent memory leak in effect cleanup
+- [2026-02-04 00:32] style: improve component aesthetics
