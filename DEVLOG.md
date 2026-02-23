@@ -1057,3 +1057,4 @@
 - [2025-09-02 03:52] style: apply consistent code formatting
 - [2025-09-01 23:36] perf: optimize database query plan
 - [2026-02-24 04:32] docs: update API documentation
+- [2026-02-24 00:09] fix: prevent memory leak in effect cleanup
