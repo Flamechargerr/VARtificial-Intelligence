@@ -114,6 +114,7 @@ VARtificial-Intelligence/
 
 ## Documentation
 
+- [Docs Index](docs/README.md)
 - [Project Structure](docs/PROJECT_STRUCTURE.md)
 - [Development Guide](docs/DEVELOPMENT.md)
 - [Backend Guide](backend/README.md)
