@@ -33,7 +33,7 @@ def test_train_sets_model_state_and_performance():
     performance = predictor.get_model_performance()
     assert len(performance) == len(predictor.models)
     for model_metrics in performance:
-        assert {"name", "accuracy", "precision", "f1Score"} <= set(model_metrics.keys())
+        assert set(model_metrics.keys()) == {"name", "accuracy", "precision", "f1Score"}
         assert 0 <= model_metrics["accuracy"] <= 1
 
 
@@ -72,5 +72,10 @@ def test_predict_returns_sorted_predictions():
     confidences = [prediction["confidence"] for prediction in predictions]
     assert confidences == sorted(confidences, reverse=True)
     for prediction in predictions:
-        assert {"modelName", "outcome", "confidence", "modelAccuracy"} <= set(prediction.keys())
+        assert set(prediction.keys()) == {
+            "modelName",
+            "outcome",
+            "confidence",
+            "modelAccuracy",
+        }
         assert prediction["outcome"] in predictor.classes

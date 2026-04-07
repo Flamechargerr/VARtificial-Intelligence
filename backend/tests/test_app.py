@@ -9,7 +9,14 @@ class FakePredictor:
         self.training_samples = 42
         self.feature_names = ["goal_diff", "shot_diff"]
         self._models = [
-            {"name": "Naive Bayes", "accuracy": 0.6, "precision": 0.61, "f1Score": 0.59}
+            {"name": "Naive Bayes", "accuracy": 0.6, "precision": 0.61, "f1Score": 0.59},
+            {"name": "Random Forest", "accuracy": 0.7, "precision": 0.71, "f1Score": 0.69},
+            {
+                "name": "Logistic Regression",
+                "accuracy": 0.65,
+                "precision": 0.66,
+                "f1Score": 0.64,
+            },
         ]
         self.last_predict_args = None
         self.raise_on_predict = False
