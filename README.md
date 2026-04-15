@@ -30,11 +30,29 @@
 
 ## ⚽ Quick Start
 
-| Step | Command(s) | Result |
-| --- | --- | --- |
-| 1️⃣ Install frontend dependencies | `npm install` | Prepares the React + TypeScript app |
-| 2️⃣ Start backend API | `cd backend`<br>`pip install -r requirements.txt`<br>`python app.py` | Backend runs at `http://localhost:5000` |
-| 3️⃣ Start frontend app | `npm run dev` | Frontend runs at `http://localhost:5173` |
+### 1️⃣ Install frontend dependencies
+
+```bash
+npm install
+```
+
+### 2️⃣ Start backend API
+
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+```
+
+Backend URL: `http://localhost:5000`
+
+### 3️⃣ Start frontend app
+
+```bash
+npm run dev
+```
+
+Frontend URL: `http://localhost:5173`
 
 ## ✨ Environment Variables
 
