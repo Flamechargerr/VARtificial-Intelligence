@@ -1,46 +1,42 @@
-# VARtificial Intelligence
+![VARtificial Intelligence Banner](https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1000&auto=format&fit=crop)
 
-Football match outcome prediction using a React + TypeScript frontend and a Python + Flask backend with scikit-learn models.
+# ⚽ VARtificial Intelligence
+
+> **AI that makes the right call, unlike VAR.** ✨  
+> Football match outcome prediction using a React + TypeScript frontend and a Python + Flask backend with scikit-learn models.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-brightgreen)](https://var-tificial-intelligence.vercel.app/)
 [![Python](https://img.shields.io/badge/Python-3.11-blue)](https://python.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-## Live Demo
+## 🚀 Live Demo
 
-https://var-tificial-intelligence.vercel.app/
+🔗 https://var-tificial-intelligence.vercel.app/
 
-## What this project does
+## 🏟️ What this project does
 
-- Predicts match outcomes with multiple ML models
-- Compares model confidence and performance metrics
-- Visualizes team, player, and match statistics
-- Supports local development for both frontend and backend
+- ⚽ Predicts match outcomes with multiple ML models
+- 📊 Compares model confidence and performance metrics
+- 🥅 Visualizes team, player, and match statistics
+- 💻 Supports local development for both frontend and backend
 
-## Tech Stack
+## 💻 Tech Stack
 
-### Frontend
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS
+| Layer | Tools |
+| --- | --- |
+| 🎨 Frontend | React 18, TypeScript, Vite, Tailwind CSS |
+| 🧠 Backend | Python 3.11, Flask, scikit-learn, NumPy / Pandas |
 
-### Backend
-- Python 3.11
-- Flask
-- scikit-learn
-- NumPy / Pandas
+## ⚽ Quick Start
 
-## Quick Start
-
-### 1) Clone and install frontend dependencies
+### 1️⃣ Install frontend dependencies
 
 ```bash
 npm install
 ```
 
-### 2) Start backend API
+### 2️⃣ Start backend API
 
 ```bash
 cd backend
@@ -50,7 +46,7 @@ python app.py
 
 Backend URL: `http://localhost:5000`
 
-### 3) Start frontend app
+### 3️⃣ Start frontend app
 
 ```bash
 npm run dev
@@ -58,7 +54,7 @@ npm run dev
 
 Frontend URL: `http://localhost:5173`
 
-## Environment Variables
+## ✨ Environment Variables
 
 Create a `.env.local` file in the project root:
 
@@ -68,20 +64,24 @@ cp .env.example .env.local
 
 Current variables:
 
-- `VITE_API_URL` - backend API base URL
+- 📡 `VITE_API_URL` - backend API base URL
 
-## NPM Scripts
+## 🚀 NPM Scripts
 
-- `npm run dev` - run Vite dev server
-- `npm run build` - type-check and production build
-- `npm run lint` - lint the project
-- `npm run preview` - preview production build locally
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Run Vite dev server |
+| `npm run build` | Type-check and production build |
+| `npm run lint` | Lint the project |
+| `npm run preview` | Preview production build locally |
 
-## API Endpoints (Backend)
+## 📊 API Endpoints (Backend)
 
-- `GET /api/health` - health check
-- `GET /api/models` - model metadata and performance
-- `POST /api/predict` - prediction request
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| `GET` | `/api/health` | Health check |
+| `GET` | `/api/models` | Model metadata and performance |
+| `POST` | `/api/predict` | Prediction request |
 
 Example payload:
 
@@ -98,7 +98,7 @@ Example payload:
 }
 ```
 
-## Project Structure
+## 🥅 Project Structure
 
 For a detailed structure map, see [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md).
 
@@ -112,7 +112,7 @@ VARtificial-Intelligence/
 └── README.md
 ```
 
-## Documentation
+## 📚 Documentation
 
 - [Docs Index](docs/README.md)
 - [Project Structure](docs/PROJECT_STRUCTURE.md)
@@ -121,6 +121,6 @@ VARtificial-Intelligence/
 - [Contributing](CONTRIBUTING.md)
 - [Changelog](CHANGELOG.md)
 
-## License
+## 🏆 License
 
 MIT - see [LICENSE](LICENSE).
