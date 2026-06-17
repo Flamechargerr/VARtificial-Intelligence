@@ -32,8 +32,8 @@ node_modules/
 data/raw/*.csv
 data/processed/*.json
 
-# Models
-backend/models/*.pkl
+# Models (keep .pkl files for deployment - they are small)
+# backend/models/*.pkl
 
 # Logs
 *.log
