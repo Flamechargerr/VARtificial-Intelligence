@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = "https://vartificial-api.onrender.com";
 
 export async function getTeams(): Promise<string[]> {
   const resp = await fetch(`${API_URL}/api/teams`);
