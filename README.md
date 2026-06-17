@@ -17,10 +17,11 @@ Football match outcome prediction using historical Premier League data and machi
 
 | Metric | Value |
 |--------|-------|
-| Accuracy | ~53.1% |
-| Log Loss | 0.992 |
+| Accuracy | **55.4%** |
+| Log Loss | 0.968 |
 | Baseline (always home win) | 43.4% |
 | Dataset size | 3,349 matches |
+| Features | 33 (incl. Elo, form, H2H) |
 
 The model beats the "always predict home win" baseline by ~10 percentage points. In football prediction, this is a meaningful improvement.
 
