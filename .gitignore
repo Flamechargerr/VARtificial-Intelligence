@@ -42,5 +42,5 @@ data/processed/*.json
 .env
 .env.local
 
-# Build outputs
-dist/
+# Keep dist for Vercel deployment
+# dist/
