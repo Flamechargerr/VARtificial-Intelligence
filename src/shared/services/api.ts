@@ -20,6 +20,12 @@ export async function predictMatch(homeTeam: string, awayTeam: string) {
   return await resp.json();
 }
 
+export async function getTeamDetails(teamName: string) {
+  const resp = await fetch(`${API_URL}/api/team/${encodeURIComponent(teamName)}`);
+  if (!resp.ok) throw new Error("Failed to fetch team details");
+  return await resp.json();
+}
+
 export async function getEvaluation() {
   const resp = await fetch(`${API_URL}/api/evaluate`);
   if (!resp.ok) throw new Error("Failed to fetch evaluation");

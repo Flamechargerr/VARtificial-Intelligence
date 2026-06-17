@@ -1,19 +1,9 @@
 """
 VARtificial Intelligence - ML Backend
-Flask API for football match prediction using a real trained model.
-
-Features:
-- Loads pre-trained numpy logistic regression model
-- Queries SQLite database for real-time team form features
-- Returns honest probability estimates with confidence intervals
-- Evaluates model performance on holdout data
+Flask API for football match prediction with rich data and feature breakdown.
 """
 
-import os
-import json
-import pickle
-import sqlite3
-import numpy as np
+import os, json, pickle, sqlite3, numpy as np
 from pathlib import Path
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -25,16 +15,10 @@ DB_PATH = Path(__file__).parent.parent / "data" / "processed" / "matches.db"
 MODEL_PATH = Path(__file__).parent / "models" / "model_numpy.pkl"
 META_PATH = Path(__file__).parent / "models" / "model_meta.json"
 
-# Load model
 with open(MODEL_PATH, "rb") as f:
-    model_artifact = pickle.load(f)
+    artifact = pickle.load(f)
 
-W = model_artifact["W"]
-b = model_artifact["b"]
-mean = model_artifact["mean"]
-std = model_artifact["std"]
-feature_cols = model_artifact["feature_cols"]
-
+W, b, mean, std, feature_cols = artifact["W"], artifact["b"], artifact["mean"], artifact["std"], artifact["feature_cols"]
 with open(META_PATH, "r") as f:
     model_meta = json.load(f)
 
@@ -44,69 +28,105 @@ def softmax(z):
     return e / np.sum(e, axis=1, keepdims=True)
 
 
-def get_team_form(team_name, is_home):
-    """Get the most recent form features for a team from the database."""
+def safe_float(v):
+    try:
+        return float(v) if v is not None else 0.0
+    except (ValueError, TypeError):
+        return 0.0
+
+
+def get_team_stats(team_name, is_home):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
     if is_home:
-        c.execute(
-            "SELECT * FROM matches WHERE HomeTeam = ? ORDER BY Date DESC LIMIT 1",
-            (team_name,),
-        )
+        c.execute("SELECT * FROM matches WHERE HomeTeam = ? ORDER BY Date DESC LIMIT 1", (team_name,))
     else:
-        c.execute(
-            "SELECT * FROM matches WHERE AwayTeam = ? ORDER BY Date DESC LIMIT 1",
-            (team_name,),
-        )
+        c.execute("SELECT * FROM matches WHERE AwayTeam = ? ORDER BY Date DESC LIMIT 1", (team_name,))
     row = c.fetchone()
-    if not row:
-        conn.close()
-        return None
 
     c.execute("PRAGMA table_info(matches)")
     cols = [d[1] for d in c.fetchall()]
     conn.close()
+
+    if not row:
+        return None
     return dict(zip(cols, row))
 
 
-def get_h2h_features(home_team, away_team):
-    """Get head-to-head features from database."""
+def get_recent_matches(team_name, limit=5):
+    """Get the last N matches for a team with full details."""
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
-    c.execute(
-        "SELECT FTR FROM matches WHERE ((HomeTeam = ? AND AwayTeam = ?) OR (HomeTeam = ? AND AwayTeam = ?)) ORDER BY Date DESC LIMIT 5",
-        (home_team, away_team, away_team, home_team),
-    )
+    c.execute("""
+        SELECT Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR, FTR as result,
+               CASE WHEN HomeTeam = ? THEN 'H' ELSE 'A' END as venue
+        FROM matches
+        WHERE HomeTeam = ? OR AwayTeam = ?
+        ORDER BY Date DESC
+        LIMIT ?
+    """, (team_name, team_name, team_name, limit))
+
     rows = c.fetchall()
     conn.close()
 
+    matches = []
+    for r in rows:
+        is_home = r[1] == team_name
+        gf = r[3] if is_home else r[4]
+        ga = r[4] if is_home else r[3]
+        result = r[5]
+        team_result = "W" if (is_home and result == "H") or (not is_home and result == "A") else \
+                      "D" if result == "D" else "L"
+        matches.append({
+            "date": r[0],
+            "home_team": r[1],
+            "away_team": r[2],
+            "home_goals": r[3],
+            "away_goals": r[4],
+            "result": result,
+            "team_result": team_result,
+            "venue": "H" if is_home else "A",
+            "goals_for": gf,
+            "goals_against": ga,
+        })
+    return matches
+
+
+def get_h2h_history(home, away, limit=5):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("""
+        SELECT Date, HomeTeam, AwayTeam, FTHG, FTAG, FTR
+        FROM matches
+        WHERE ((HomeTeam = ? AND AwayTeam = ?) OR (HomeTeam = ? AND AwayTeam = ?))
+        ORDER BY Date DESC
+        LIMIT ?
+    """, (home, away, away, home, limit))
+    rows = c.fetchall()
+    conn.close()
+
+    return [{
+        "date": r[0], "home_team": r[1], "away_team": r[2],
+        "home_goals": r[3], "away_goals": r[4], "result": r[5]
+    } for r in rows]
+
+
+def get_h2h_features(home, away):
+    rows = get_h2h_history(home, away, 5)
     if not rows:
         return {"h2h_home_wins": 0, "h2h_draws": 0, "h2h_away_wins": 0, "h2h_matches": 0}
-
     total = len(rows)
-    hw = sum(1 for r in rows if r[0] == "H")
-    dr = sum(1 for r in rows if r[0] == "D")
-    aw = sum(1 for r in rows if r[0] == "A")
-
-    return {
-        "h2h_home_wins": hw / total,
-        "h2h_draws": dr / total,
-        "h2h_away_wins": aw / total,
-        "h2h_matches": total,
-    }
+    hw = sum(1 for r in rows if r["result"] == "H")
+    dr = sum(1 for r in rows if r["result"] == "D")
+    aw = sum(1 for r in rows if r["result"] == "A")
+    return {"h2h_home_wins": hw/total, "h2h_draws": dr/total, "h2h_away_wins": aw/total, "h2h_matches": total}
 
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({
-        "status": "healthy",
-        "model_loaded": True,
-        "feature_count": len(feature_cols),
-        "train_size": model_meta.get("train_size"),
-        "test_size": model_meta.get("test_size"),
-    })
+    return jsonify({"status": "healthy", "model_loaded": True, "feature_count": len(feature_cols)})
 
 
 @app.route("/api/teams", methods=["GET"])
@@ -116,8 +136,32 @@ def get_teams():
     c.execute("SELECT name FROM teams ORDER BY name")
     teams = [r[0] for r in c.fetchall()]
     conn.close()
-
     return jsonify({"teams": teams})
+
+
+@app.route("/api/team/<team_name>", methods=["GET"])
+def team_details(team_name):
+    """Get detailed team stats and recent form."""
+    home_stats = get_team_stats(team_name, True)
+    away_stats = get_team_stats(team_name, False)
+    recent = get_recent_matches(team_name, 5)
+
+    if not home_stats and not away_stats:
+        return jsonify({"error": "Team not found"}), 404
+
+    stats = home_stats or away_stats
+
+    return jsonify({
+        "name": team_name,
+        "elo": round(safe_float(stats.get("home_elo" if home_stats else "away_elo", 1500)), 1),
+        "recent_form": recent,
+        "rolling_stats": {
+            "goals_scored_5": round(safe_float(stats.get("home_goals_scored_5" if home_stats else "away_goals_scored_5", 0)), 2),
+            "goals_conceded_5": round(safe_float(stats.get("home_goals_conceded_5" if home_stats else "away_goals_conceded_5", 0)), 2),
+            "win_rate_5": round(safe_float(stats.get("home_win_rate_5" if home_stats else "away_win_rate_5", 0)), 2),
+            "pts_5": round(safe_float(stats.get("home_pts_5" if home_stats else "away_pts_5", 0)), 1),
+        }
+    })
 
 
 @app.route("/api/evaluate", methods=["GET"])
@@ -133,36 +177,25 @@ def evaluate():
     })
 
 
-def safe_float(val):
-    if val is None:
-        return 0.0
-    try:
-        return float(val)
-    except (ValueError, TypeError):
-        return 0.0
-
-
 @app.route("/api/predict", methods=["POST"])
 def predict():
     data = request.get_json()
-    home_team = data.get("home_team")
-    away_team = data.get("away_team")
+    home = data.get("home_team")
+    away = data.get("away_team")
 
-    if not home_team or not away_team:
-        return jsonify({"error": "Missing home_team or away_team"}), 400
+    if not home or not away:
+        return jsonify({"error": "Missing teams"}), 400
+    if home == away:
+        return jsonify({"error": "Teams must be different"}), 400
 
-    if home_team == away_team:
-        return jsonify({"error": "Home and away teams must be different"}), 400
-
-    # Get features
-    home_form = get_team_form(home_team, is_home=True)
-    away_form = get_team_form(away_team, is_home=False)
-    h2h_feat = get_h2h_features(home_team, away_team)
+    home_form = get_team_stats(home, True)
+    away_form = get_team_stats(away, False)
+    h2h_feat = get_h2h_features(home, away)
 
     if home_form is None or away_form is None:
-        return jsonify({"error": "Insufficient historical data for one or both teams"}), 400
+        return jsonify({"error": "Insufficient data"}), 400
 
-    # Build feature vector in the exact order the model expects
+    # Build feature vector
     feat_vec = []
     for col in feature_cols:
         if col.startswith("home_"):
@@ -178,27 +211,38 @@ def predict():
 
     X = np.array([feat_vec])
     X_s = (X - mean) / std
-
     z = X_s @ W + b
     p = softmax(z)[0]
 
     outcomes = ["Home Win", "Draw", "Away Win"]
-    predictions = []
-    for i, outcome in enumerate(outcomes):
-        predictions.append({
-            "outcome": outcome,
-            "probability": round(float(p[i]) * 100, 1),
-        })
-
+    predictions = [{"outcome": o, "probability": round(float(p[i]) * 100, 1)} for i, o in enumerate(outcomes)]
     predictions.sort(key=lambda x: x["probability"], reverse=True)
+
+    # Feature breakdown for UI
+    feature_breakdown = []
+    for i, col in enumerate(feature_cols):
+        val = feat_vec[i]
+        weight = float(W[i, np.argmax(p)])  # Weight for predicted class
+        impact = val * weight
+        feature_breakdown.append({
+            "feature": col,
+            "value": round(val, 2),
+            "weight": round(weight, 3),
+            "impact": round(impact, 3),
+        })
+    feature_breakdown.sort(key=lambda x: abs(x["impact"]), reverse=True)
 
     return jsonify({
         "success": True,
-        "home_team": home_team,
-        "away_team": away_team,
+        "home_team": home,
+        "away_team": away,
         "predictions": predictions,
         "model_accuracy": model_meta.get("accuracy"),
-        "model_log_loss": model_meta.get("log_loss"),
+        "feature_breakdown": feature_breakdown[:10],
+        "home_recent": get_recent_matches(home, 5),
+        "away_recent": get_recent_matches(away, 5),
+        "h2h_history": get_h2h_history(home, away, 5),
+        "h2h_stats": h2h_feat,
     })
 
 
