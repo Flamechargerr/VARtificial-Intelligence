@@ -45,51 +45,63 @@ def softmax(z):
 
 
 def get_team_features(team_name, is_home=True):
-    """Extract pre-match features for a team from the database."""
+    """Extract pre-match features for a team from the database.
+    
+    Finds the most recent match for this team and extracts the 
+    pre-engineered rolling form features from that match.
+    """
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
-    # Get last 5 matches for this team (all venues), with dates for sorting
-    c.execute(
-        "SELECT Date, FTHG, FTAG, FTR, HS, HST, 1 as is_home FROM matches WHERE HomeTeam = ? UNION ALL SELECT Date, FTAG, FTHG, FTR, AS, AST, 0 as is_home FROM matches WHERE AwayTeam = ? ORDER BY Date DESC LIMIT 5",
-        (team_name, team_name),
-    )
-    rows = c.fetchall()
-    conn.close()
-
-    if not rows:
-        return None
-
-    # rows: (Date, goals_for, goals_against, FTR, shots, shots_target, is_home)
-    venue_rows = [r for r in rows if r[6] == (1 if is_home else 0)]
-    if not venue_rows:
-        venue_rows = rows[:5]
+    if is_home:
+        # Find most recent match where this team was home
+        c.execute(
+            "SELECT * FROM matches WHERE HomeTeam = ? ORDER BY Date DESC LIMIT 1",
+            (team_name,),
+        )
     else:
-        venue_rows = venue_rows[:5]
-
-    goals_for = [r[1] for r in rows]
-    goals_against = [r[2] for r in rows]
-    shots = [r[4] for r in rows]
-    shots_target = [r[5] for r in rows]
-
-    pts = sum(3 if r[3] == ("H" if is_home else "A") else 1 if r[3] == "D" else 0 for r in rows)
-    win_rate = sum(1 for r in rows if r[3] == ("H" if is_home else "A")) / len(rows)
-
-    home_goals_for = [r[1] for r in venue_rows]
-    home_goals_against = [r[2] for r in venue_rows]
-    home_pts = sum(3 if r[3] == ("H" if is_home else "A") else 1 if r[3] == "D" else 0 for r in venue_rows)
-
-    return {
-        "goals_scored_5": sum(goals_for) / len(goals_for),
-        "goals_conceded_5": sum(goals_against) / len(goals_against),
-        "shots_5": sum(shots) / len(shots),
-        "shots_target_5": sum(shots_target) / len(shots_target),
-        "pts_5": pts,
-        "win_rate_5": win_rate,
-        "goals_scored_home_5": sum(home_goals_for) / len(home_goals_for) if home_goals_for else 0,
-        "goals_conceded_home_5": sum(home_goals_against) / len(home_goals_against) if home_goals_against else 0,
-        "pts_home_5": home_pts,
-    }
+        # Find most recent match where this team was away
+        c.execute(
+            "SELECT * FROM matches WHERE AwayTeam = ? ORDER BY Date DESC LIMIT 1",
+            (team_name,),
+        )
+    
+    row = c.fetchone()
+    if not row:
+        conn.close()
+        return None
+    
+    # Get column names
+    c.execute("PRAGMA table_info(matches)")
+    cols = [d[1] for d in c.fetchall()]
+    conn.close()
+    
+    data = dict(zip(cols, row))
+    
+    if is_home:
+        return {
+            "goals_scored_5": data.get("home_goals_scored_5", 0),
+            "goals_conceded_5": data.get("home_goals_conceded_5", 0),
+            "shots_5": data.get("home_shots_5", 0),
+            "shots_target_5": data.get("home_shots_target_5", 0),
+            "pts_5": data.get("home_pts_5", 0),
+            "win_rate_5": data.get("home_win_rate_5", 0),
+            "goals_scored_home_5": data.get("home_goals_scored_home_5", 0),
+            "goals_conceded_home_5": data.get("home_goals_conceded_home_5", 0),
+            "pts_home_5": data.get("home_pts_home_5", 0),
+        }
+    else:
+        return {
+            "goals_scored_5": data.get("away_goals_scored_5", 0),
+            "goals_conceded_5": data.get("away_goals_conceded_5", 0),
+            "shots_5": data.get("away_shots_5", 0),
+            "shots_target_5": data.get("away_shots_target_5", 0),
+            "pts_5": data.get("away_pts_5", 0),
+            "win_rate_5": data.get("away_win_rate_5", 0),
+            "goals_scored_away_5": data.get("away_goals_scored_away_5", 0),
+            "goals_conceded_away_5": data.get("away_goals_conceded_away_5", 0),
+            "pts_away_5": data.get("away_pts_away_5", 0),
+        }
 
 
 def get_h2h_features(home_team, away_team):
