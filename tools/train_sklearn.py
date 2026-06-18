@@ -25,7 +25,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, log_loss, brier_score_loss, classification_report
 
 PROJECT = Path(__file__).parent.parent
-DB_PATH = PROJECT / "data" / "processed" / "matches.db"
+DB_PATH = PROJECT / "backend" / "data" / "processed" / "matches.db"
 MODELS_DIR = PROJECT / "backend" / "models"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 

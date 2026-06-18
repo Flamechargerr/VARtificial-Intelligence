@@ -8,8 +8,7 @@ RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Copy backend code, models, data, and scripts
 COPY backend/ ./backend/
-COPY data/ ./data/
-COPY scripts/ ./scripts/
+COPY tools/ ./tools/
 
 WORKDIR /app/backend
 

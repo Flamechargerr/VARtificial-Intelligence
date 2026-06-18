@@ -3,7 +3,7 @@ services:
     name: vartificial-api
     runtime: docker
     rootDir: .
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./deploy/Dockerfile
     envVars:
       - key: PORT
         value: 10000

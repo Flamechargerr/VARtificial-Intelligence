@@ -5,10 +5,10 @@
   "type": "module",
   "description": "Football match outcome prediction using historical Premier League data and machine learning",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "dev": "vite --config config/vite.config.ts",
+    "build": "tsc && vite build --config config/vite.config.ts",
+    "lint": "eslint . --config config/eslint.config.js --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview --config config/vite.config.ts"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.0",

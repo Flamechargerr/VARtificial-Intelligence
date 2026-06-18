@@ -11,7 +11,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = Path(__file__).parent.parent / "data" / "processed" / "matches.db"
+DB_PATH = Path(__file__).parent / "data" / "processed" / "matches.db"
 MODEL_PATH = Path(__file__).parent / "models" / "model_numpy.pkl"
 META_PATH = Path(__file__).parent / "models" / "model_meta.json"
 

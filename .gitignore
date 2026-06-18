@@ -28,9 +28,9 @@ Thumbs.db
 # Node
 node_modules/
 
-# Data (keep structure, ignore large files)
-data/raw/*.csv
-data/processed/*.json
+# Data (ignore large raw files, keep processed DB)
+backend/data/raw/*.csv
+backend/data/processed/*.json
 
 # Models (keep .pkl files for deployment - they are small)
 # backend/models/*.pkl
@@ -42,5 +42,6 @@ data/processed/*.json
 .env
 .env.local
 
-# Keep dist for Vercel deployment
-# dist/
+# Tools
+__pycache__/
+tools/__pycache__/

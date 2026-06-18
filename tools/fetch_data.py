@@ -28,8 +28,8 @@ SEASONS = [
 ]
 
 BASE_URL = "https://www.football-data.co.uk/mmz4281/{season}/E0.csv"
-RAW_DIR = Path("data/raw")
-PROCESSED_DIR = Path("data/processed")
+RAW_DIR = Path("backend/data/raw")
+PROCESSED_DIR = Path("backend/data/processed")
 
 
 def download_season(season: str) -> Path:
